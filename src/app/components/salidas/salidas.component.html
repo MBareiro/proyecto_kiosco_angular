@@ -1,0 +1,110 @@
+<div class="container mt-4">
+    <div class="card">
+        <div class="card-header bg-dark text-white">
+            <h1 class="card-title">Salidas</h1>
+        </div>
+        <div class="card-body">
+            <!-- Primer conjunto de campos -->
+            <div class="row mb-3">
+                <div class="col-md-4 col-lg-2">
+                    <div class="form-group">
+                        <label for="recibido">Recibido</label>
+                        <div class="input-group">
+                            <span class="input-group-text" id="basic-addon1">$</span>
+                            <input type="text" class="form-control" id="recibido" placeholder="Opcional" aria-label="Recibido" aria-describedby="basic-addon1">
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tercer conjunto de campos -->
+            <div class="row mb-3">
+                <div class="col-md-4 col-lg-2">
+                    <div class="form-group">
+                        <label for="producto">Producto</label>
+                        <input type="text" class="form-control" id="producto" placeholder="" aria-label="Producto" />
+                    </div>
+                </div>
+                <div class="col-md-4 col-lg-2">
+                    <div class="form-group">
+                        <label for="cantidad">Cantidad</label>
+                        <input type="text" class="form-control" id="cantidad" placeholder="" aria-label="Cantidad" />
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-lg-2">
+                    <div class="form-group">
+                        <label for="reserva">Stock</label>
+                        <input type="text" class="form-control" id="reserva" placeholder="" aria-label="Stock" />
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-lg-2">
+                    <div class="form-group">
+                        <label for="recibido">Precio venta</label>
+                        <div class="input-group">
+                            <span class="input-group-text" id="basic-addon1">$</span>
+                            <input type="text" class="form-control" id="precio_venta" placeholder="" aria-label="Precio venta" aria-describedby="basic-addon1">
+                        </div>
+                        
+                    </div>
+                </div>
+                <div class="col-md-4 col-lg-2 button-container">
+                    <button type="button" class="btn btn-primary" disabled>+</button>
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">Cod. Prod.</th>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Cantidad</th>
+                            <th scope="col">Reserva</th>
+                            <th scope="col">Precio compra</th>
+                            <th scope="col">Precio venta</th>
+                            <th scope="col">Importe</th>
+                        </tr>
+                    </thead>
+                    <tbody class="table-group-divider">
+                        <tr *ngFor="let element of dataSource">
+                            <td>{{ element.position }}</td>
+                            <td>{{ element.name }}</td>
+                            <td>{{ element.weight }}</td>
+                            <td>{{ element.symbol }}</td>
+                            <td>{{ element.symbol }}</td>
+                            <td>{{ element.symbol }}</td>
+                            <td>{{ element.symbol }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="row">
+                <div class="col-md-2">
+                    <button type="button" class="btn btn-secondary btn-lg">Limpiar</button>
+                </div>
+                <div class="col-md-2">
+                    <button type="button" class="btn btn-danger btn-lg">Eliminar</button>
+                </div>
+            </div>
+
+            <div class="card-footer container">
+                <div class="row">
+                    <div class="col-md-5">
+                        <p><strong>TOTAL: </strong></p>
+                        <p>$29329</p>
+                    </div>
+                    <div class="col-md-5">
+                        <p><strong>VUELTO: </strong></p>
+                        <p>$15</p>
+                    </div>
+                    <div class="col-md-2 d-flex justify-content-end">
+                        <button type="button" class="btn btn-success btn-lg">GUARDAR</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

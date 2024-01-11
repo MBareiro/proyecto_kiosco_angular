@@ -1,0 +1,130 @@
+<div class="container mt-4">
+  <div class="card">
+    <div class="card-header bg-dark text-white">
+      <h1 class="card-title">Ingresos</h1>
+    </div>
+    <div class="card-body">
+      <!-- Primer conjunto de campos -->
+      
+      <div class="row mb-3">        
+        <div class="col-md-4 col-lg-2">
+          <div class="form-group">
+            <label for="productos">Productos</label>
+            <select class="form-select" id="productos" aria-label="Default select example" [(ngModel)]="selectedProduct" (change)="Producto()">
+              <option value="-" selected>-</option>
+              <option *ngFor="let producto of productos" [value]="producto.id">{{ producto.nombre }}</option>
+            </select>
+          </div>          
+        </div><!-- 
+        <div class="col-md-4 col-lg-2 button-container">
+          <button type="button" class="btn btn-primary">Registrar</button>
+        </div> -->
+        
+        <div class="col-md-4 col-lg-2">
+          <div class="form-group">
+            <label for="proveedores">Proveedores</label>
+            <select class="form-select" id="proveedores" aria-label="proveedores"  [(ngModel)]="selectedProveedor" (change)="Proveedor()">
+              <option value="-" selected>-</option>
+              <option *ngFor="let proveedor of proveedores" [value]="proveedor.id">{{ proveedor.nombre }}</option>
+            </select>
+          </div>          
+        </div>
+        
+        <!-- 
+        <div class="col-md-4 col-lg-2 button-container">
+          <button type="button" class="btn btn-primary">Primary</button>
+        </div> -->
+      </div>
+
+      <!-- Tercer conjunto de campos -->
+      <div class="row mb-3">
+        <div class="col-md-4 col-lg-2">
+          <div class="form-group">
+            <label for="precio_compra">Precio Compra</label>
+            <div class="input-group">
+              <span class="input-group-text" id="basic-addon1">$</span>
+              <input type="number" class="form-control" id="precio_compra" placeholder="" aria-label="Precio compra" aria-describedby="basic-addon1" [disabled]="!isProductoSeleccionado" [(ngModel)]="precioCompraInput"  (keyup)="PrecioCompraValidacion()" (change)="PrecioCompraValidacion()" step="0.01">
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-md-4 col-lg-2">
+          <div class="form-group">
+            <label for="precio_venta">Precio Venta</label>
+            <div class="input-group">
+              <span class="input-group-text" id="basic-addon1">$</span>
+              <input type="number" class="form-control" id="precio_venta" placeholder="" aria-label="Precio venta" aria-describedby="basic-addon1" [disabled]="!isProductoSeleccionado" [(ngModel)]="precioVentaInput" (keyup)="PrecioVentaValidacion()" (change)="PrecioVentaValidacion()" step="0.01">
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-md-4 col-lg-2">
+          <div class="form-group">
+            <label for="cantidad">Cantidad</label>
+            <input type="number" class="form-control" id="cantidad" placeholder="" aria-label="Cantidad" [disabled]="!isProductoSeleccionado" [(ngModel)]="cantidadInput" (keyup)="CantidadValidacion()" (change)="CantidadValidacion()">
+          </div>
+        </div>
+        
+        <div class="col-md-4 col-lg-2">
+          <div class="form-group">
+            <label for="reserva">Reserva</label>
+            <input type="number" class="form-control" id="reserva" placeholder="" aria-label="Reserva" [disabled]="!isProductoSeleccionado" [(ngModel)]="reservaInput" (keyup)="ReservaValidacion()" (change)="ReservaValidacion()">
+          </div>
+        </div>
+        <div class="col-md-4 col-lg-2 button-container">
+          <button type="button" class="btn btn-primary" [disabled]="!isProductoSeleccionado" (click)="registrarProducto()">+</button>
+        </div>
+      </div>
+      <div class="table-responsive">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th scope="col"></th>
+              <th scope="col">Cod. Prod.</th>
+              <th scope="col">Nombre</th>
+              <th scope="col">Cantidad</th>
+              <th scope="col">Reserva</th>
+              <th scope="col">Precio compra</th>
+              <th scope="col">Precio venta</th>
+              <th scope="col">Importe</th>
+              <th scope="col">Eliminar</th>
+            </tr>
+          </thead>
+          <tbody class="table-group-divider">
+            <tr *ngFor="let element of dataSource">
+              <td>{{ element.position }}</td>
+              <td>{{ element.cod_product }}</td>
+              <td>{{ element.nombre }}</td>
+              <td>{{ element.cantidad }}</td>
+              <td>{{ element.reserva }}</td>
+              <td>{{ element.precio_compra | currency:'USD':'symbol':'1.2-2' }}</td>
+              <td>{{ element.precio_venta | currency:'USD':'symbol':'1.2-2' }}</td>
+              <td>{{ element.importe | currency:'USD':'symbol':'1.2-2' }}</td>
+              <td>
+                <button type="button" class="btn btn-danger btn-sm" (click)="eliminarRegistro(element.position)">Eliminar</button>
+              </td>
+            </tr>          
+          </tbody>
+        </table>
+      </div>
+
+      <div class="row">
+        <div class="col-md-2">
+            <button type="button" class="btn btn-secondary btn-lg" (click)="limpiarTabla()">Limpiar</button>
+        </div>        
+    </div>
+    <div class="card-footer container">
+      <div class="row">
+        <div class="col-md-10">
+          <p><strong>TOTAL: </strong></p>
+          <p>{{ total | currency }}</p>
+        </div>
+    
+        <div class="col-md-2 d-flex justify-content-end">
+          <button type="button" class="btn btn-success btn-lg" (click)="guardar()">GUARDAR</button>
+        </div>
+      </div>
+    </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,55 @@
+<!-- Contenido del componente -->
+<div class="container mt-4">
+    <div class="card">
+        <div class="card-header bg-dark text-white">
+            <h1 class="card-title">Proveedores</h1>
+        </div>
+        <div class="card-body">
+
+            <div class="row mb-3">
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label for="precio_compra">Nombre</label>
+                        <input type="text" class="form-control" id="precio_compra" placeholder=""
+                            aria-label="Precio Compra" />
+                    </div>
+                </div>
+                <div class="col-md-2 button-container">
+                    <button type="button" class="btn btn-dark">Buscar</button>
+                </div>               
+            </div>
+            <div class="table-responsive"><table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">Cod. Prod.</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Cantidad</th>
+                        <th scope="col">Reserva</th>
+                        <th scope="col">Precio compra</th>
+                        <th scope="col">Precio venta</th>
+                        <th scope="col">Importe</th>
+                    </tr>
+                </thead>
+                <tbody class="table-group-divider">
+                    <tr *ngFor="let element of dataSource">
+                        <td>{{ element.position }}</td>
+                        <td>{{ element.name }}</td>
+                        <td>{{ element.weight }}</td>
+                        <td>{{ element.symbol }}</td>
+                        <td>{{ element.symbol }}</td>
+                        <td>{{ element.symbol }}</td>
+                        <td>{{ element.symbol }}</td>
+                    </tr>
+                </tbody>
+            </table></div>
+            
+            <div class="row">
+                <div class="col-md-2">
+                    <button type="button" class="btn btn-secondary btn-lg">Limpiar</button>
+                </div>
+                <div class="col-md-2">
+                    <button type="button" class="btn btn-danger btn-lg">Eliminar</button>
+                </div>
+            </div>     
+        </div>
+    </div>

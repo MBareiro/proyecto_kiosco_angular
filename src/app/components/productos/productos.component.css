@@ -1,0 +1,81 @@
+  /* Agrega estilos personalizados aquí */
+  .grid-container {
+    margin: 20px;
+  }
+
+  .card-body {
+    
+    background-color: rgb(216, 214, 214);
+  }
+
+  .mat-card-header, .card-footer {
+    color: white;    
+  background-color: blue;
+  font-size: 2rem; /* Puedes ajustar este valor según tus necesidades */
+  }
+
+  .mat-card-title {
+    margin-bottom: 10px;
+  }
+
+  /* Estilos para el formulario dentro de las tarjetas */
+  .container {
+    margin-bottom: 15px;
+  }
+
+  .container .row {
+    margin-bottom: 10px;
+  }
+
+  .container input,
+  .container select,
+  .container button {
+    margin-bottom: 10px;
+  }
+
+  /* Estilos para la tabla dentro de las tarjetas */
+  .container table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .container th,
+  .container td {
+    padding: 8px;
+    border: 1px solid #ddd;
+    text-align: left;
+  }
+
+  /* Ajustes adicionales para los botones y selects */
+  .btn,
+  .form-select {
+    width: 100%;
+  }
+
+  /* Estilos específicos para el componente del dashboard */
+  .mat-h1 {
+    margin-bottom: 15px;
+  }
+
+  @media (max-width: 768px) {
+    /* Ajustes de estilo para dispositivos móviles */
+    .container th,
+    .container td {
+      font-size: 14px;
+    }
+  }
+
+  /* button-styles.css */
+
+.button-container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+.button-container button {
+  margin-top: 20px; /* Puedes ajustar este valor según tus necesidades */
+}
+
+p{
+  margin-top: 15px;
+}

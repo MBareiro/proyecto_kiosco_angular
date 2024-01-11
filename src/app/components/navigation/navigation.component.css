@@ -1,0 +1,66 @@
+.sidenav-container {
+  height: 100%;
+}
+
+.sidenav {
+  width: 200px;
+}
+
+.sidenav .mat-toolbar {
+  background: inherit;
+}
+
+.mat-toolbar {
+  display: flex;
+  justify-content: space-between; /* Alinear elementos en ambos extremos */
+  align-items: center; /* Centrar elementos verticalmente */
+}
+
+.mat-toolbar.mat-primary {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background-color: rgb(87, 87, 87) !important;
+}
+
+
+.list-item {
+  display: flex;
+  align-items: center;
+}
+
+.icon {
+  vertical-align: middle;
+  margin-right: 8px; /* Ajusta el espacio entre el icono y el texto según sea necesario */
+}
+
+.text {
+  vertical-align: middle;
+}
+
+/* Estilos para el mat-sidenav */
+.sidenav {
+  background-color: black;
+  color: white;
+}
+
+/* Estilos para los elementos de la lista */
+.list-item {
+  color: white; /* Ajusta el color del texto si es necesario */
+  text-decoration: none; /* Evita la subrayado en los enlaces */
+}
+
+.list-item:hover {
+  background-color: #333; /* Cambia el color de fondo al pasar el ratón sobre el enlace */
+}
+
+/* Estilos para los iconos */
+.icon {
+  color: white;
+  margin-right: 8px; /* Ajusta el espacio entre el icono y el texto según sea necesario */
+}
+
+/* Estilos para el texto */
+.text {
+  color: white; /* Hereda el color del texto del elemento padre */
+}
