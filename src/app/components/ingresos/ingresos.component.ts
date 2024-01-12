@@ -146,8 +146,7 @@ export class IngresosComponent {
       // Valor no válido, agrega la clase is-invalid
       this.renderer.addClass(document.getElementById('reserva'), 'is-invalid');
     }
-  }
-  
+  }  
 
   registrarProducto() {
     this.PrecioCompraValidacion();

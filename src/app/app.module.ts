@@ -27,6 +27,9 @@ import { ProveedoresComponent } from './components/proveedores/proveedores.compo
 import { SalidasComponent } from './components/salidas/salidas.component';
 import { ProductosComponent } from './components/productos/productos.component';
 import { ReportesComponent } from './components/reportes/reportes.component';
+import { EditarProveedorDialogComponent } from './components/editar-proveedor-dialog/editar-proveedor-dialog.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { NuevoProveedorDialogComponent } from './components/nuevo-proveedor-dialog/nuevo-proveedor-dialog.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -36,7 +39,9 @@ import { ReportesComponent } from './components/reportes/reportes.component';
     ProveedoresComponent,
     SalidasComponent,
     ProductosComponent,
-    ReportesComponent
+    ReportesComponent,
+    EditarProveedorDialogComponent,
+    NuevoProveedorDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -57,8 +62,8 @@ import { ReportesComponent } from './components/reportes/reportes.component';
     MatMenuModule,
     MatSnackBarModule,
     MatSelectModule,
-    MatTableModule
-    
+    MatTableModule,
+    MatDialogModule    
   ],
   providers: [],
   bootstrap: [AppComponent]

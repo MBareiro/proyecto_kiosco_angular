@@ -7,49 +7,57 @@
         <div class="card-body">
 
             <div class="row mb-3">
-                <div class="col-md-2">
-                    <div class="form-group">
-                        <label for="precio_compra">Nombre</label>
-                        <input type="text" class="form-control" id="precio_compra" placeholder=""
-                            aria-label="Precio Compra" />
-                    </div>
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label for="nombre">Nombre</label>
+                    <input type="text" class="form-control" id="nombre" placeholder="Buscar por nombre" [(ngModel)]="filtroNombre" (input)="aplicarFiltro()" />
+                  </div>
                 </div>
-                <div class="col-md-2 button-container">
-                    <button type="button" class="btn btn-dark">Buscar</button>
-                </div>               
+                <div class="col-md-5 d-flex justify-content-between align-items-end">
+                  <div class="form-group">
+                    <button type="button" class="btn btn-dark" (click)="limpiarFiltro()">Limpiar Filtro</button>
+                  </div>
+                  <div class="form-group">
+                    <button type="button" class="btn btn-primary" (click)="abrirDialogoNuevoProveedor()">Crear Proveedor</button>
+                  </div>
+                </div>
+              </div>
+              
+
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col"></th>
+                            <th scope="col">Cod. Prov.</th>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Telefono</th>
+                            <th scope="col">Direccion</th>
+                            <th scope="col">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody class="table-group-divider">
+                        <tr *ngFor="let proveedor of proveedores; let i = index">
+                            <td>{{ i + 1 }}</td>
+                            <td>{{ proveedor.id }}</td>
+                            <td>{{ proveedor.nombre }}</td>
+                            <td>{{ proveedor.telefono }}</td>
+                            <td>{{ proveedor.direccion }}</td>
+                            <td class="p-1">
+                                <div class="d-flex">
+                                    <button mat-mini-fab color="primary" aria-label="" class="m-1 p-1" (click)="eliminarProveedor(proveedor.id)">
+                                        <mat-icon>delete</mat-icon>
+                                    </button>
+                                    <button mat-mini-fab color="primary" aria-label="" class="m-1 p-1" (click)="editarProveedor(proveedor.id.toString())">
+                                        <mat-icon>edit</mat-icon>
+                                    </button>
+                                </div>
+                            </td>
+                                             
+                        </tr>
+                </table>
             </div>
-            <div class="table-responsive"><table class="table table-hover">
-                <thead>
-                    <tr>
-                        <th scope="col">Cod. Prod.</th>
-                        <th scope="col">Nombre</th>
-                        <th scope="col">Cantidad</th>
-                        <th scope="col">Reserva</th>
-                        <th scope="col">Precio compra</th>
-                        <th scope="col">Precio venta</th>
-                        <th scope="col">Importe</th>
-                    </tr>
-                </thead>
-                <tbody class="table-group-divider">
-                    <tr *ngFor="let element of dataSource">
-                        <td>{{ element.position }}</td>
-                        <td>{{ element.name }}</td>
-                        <td>{{ element.weight }}</td>
-                        <td>{{ element.symbol }}</td>
-                        <td>{{ element.symbol }}</td>
-                        <td>{{ element.symbol }}</td>
-                        <td>{{ element.symbol }}</td>
-                    </tr>
-                </tbody>
-            </table></div>
-            
-            <div class="row">
-                <div class="col-md-2">
-                    <button type="button" class="btn btn-secondary btn-lg">Limpiar</button>
-                </div>
-                <div class="col-md-2">
-                    <button type="button" class="btn btn-danger btn-lg">Eliminar</button>
-                </div>
-            </div>     
+
+
         </div>
     </div>
