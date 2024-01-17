@@ -3,6 +3,9 @@ import { ProveedorService } from 'src/app/services/proveedor.service';
 import { MatDialog } from '@angular/material/dialog';
 import { EditarProveedorDialogComponent } from '../editar-proveedor-dialog/editar-proveedor-dialog.component';
 import { NuevoProveedorDialogComponent } from '../nuevo-proveedor-dialog/nuevo-proveedor-dialog.component';
+import * as pdfMake from 'pdfmake/build/pdfmake';
+import * as pdfFonts from 'pdfmake/build/vfs_fonts';
+(pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
 
 export interface Proveedor {
   id: number;
@@ -21,7 +24,6 @@ export class ProveedoresComponent {
   filtroNombre: string = '';
   proveedorSeleccionado: Proveedor = { id: 0, nombre: '', telefono: '', direccion: '' };
 
-
   displayedColumns: string[] = [
     'Cod. Prov.',
     'Nombre',
@@ -34,6 +36,43 @@ export class ProveedoresComponent {
 
   ngOnInit(): void {
     this.cargarProveedores();
+  }
+
+  generarPDF() {
+    const documentDefinition: any = {
+      content: [
+        { text: 'Lista de Proveedores', style: 'header' },
+        '\n',
+        {
+          table: {
+            headerRows: 1,
+            body: [
+              ['Cod. Prov.', 'Nombre', 'Telefono', 'Direccion']
+            ]
+          }
+        }
+      ],
+      styles: {
+        header: {
+          fontSize: 18,
+          bold: true
+        }
+      }
+    };
+  
+    // Agrega las filas de datos de proveedores al body de la tabla en documentDefinition
+    this.proveedores.forEach(proveedor => {
+      (documentDefinition.content[2] as { table: { body: string[][] } }).table.body.push([
+        proveedor.id.toString(),
+        proveedor.nombre,
+        proveedor.telefono,
+        proveedor.direccion
+      ]);
+    });
+    
+    
+  
+    pdfMake.createPdf(documentDefinition).open();
   }
 
   cargarProveedores() {
@@ -73,28 +112,6 @@ export class ProveedoresComponent {
       }
     );
   }
-  aplicarFiltro() {
-    // Filtra los proveedores por nombre
-    this.proveedores = this.proveedores.filter(proveedor =>
-      proveedor.nombre.toLowerCase().includes(this.filtroNombre.toLowerCase())
-    );
-  }
-  limpiarFiltro() {
-    this.filtroNombre = '';
-    this.cargarProveedores();
-  }
-  guardarCambios() {
-    // Llama a tu servicio para actualizar el proveedor en el backend
-    this.proveedorService.actualizarProveedor(this.proveedorSeleccionado).subscribe(
-      (resultado) => {
-        console.log('Proveedor actualizado correctamente', resultado);
-        // Puedes recargar la lista de proveedores o tomar otras acciones necesarias
-      },
-      (error) => {
-        console.error('Error al actualizar el proveedor', error);
-      }
-    );
-  }
   editarProveedor(id: string) {
     // Mueve la lógica del diálogo dentro de la suscripción
     this.proveedorService.getProveedorById(id).subscribe(
@@ -103,7 +120,7 @@ export class ProveedoresComponent {
   
         if (this.proveedorSeleccionado) {
           const dialogRef = this.dialog.open(EditarProveedorDialogComponent, {
-            width: '400px',
+            width: '260px',
             data: { ...this.proveedorSeleccionado },
           });
   
@@ -126,11 +143,33 @@ export class ProveedoresComponent {
         console.error('Error al obtener el proveedor', error);
       }
     );
+  }  
+  aplicarFiltro() {
+    // Filtra los proveedores por nombre
+    this.proveedores = this.proveedores.filter(proveedor =>
+      proveedor.nombre.toLowerCase().includes(this.filtroNombre.toLowerCase())
+    );
+  }
+  limpiarFiltro() {
+    this.filtroNombre = '';
+    this.cargarProveedores();
+  }
+  guardarCambios() {
+    // Llama a tu servicio para actualizar el proveedor en el backend
+    this.proveedorService.actualizarProveedor(this.proveedorSeleccionado).subscribe(
+      (resultado) => {
+        console.log('Proveedor actualizado correctamente', resultado);
+        // Puedes recargar la lista de proveedores o tomar otras acciones necesarias
+      },
+      (error) => {
+        console.error('Error al actualizar el proveedor', error);
+      }
+    );
   }
   
   abrirDialogoNuevoProveedor() {
     const dialogRef = this.dialog.open(NuevoProveedorDialogComponent, {
-      width: '400px',
+      width: '260px',
     });
   
     dialogRef.afterClosed().subscribe((nuevoProveedor) => {

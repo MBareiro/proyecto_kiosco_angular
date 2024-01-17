@@ -1,0 +1,32 @@
+<!-- nuevo-producto-dialog.component.html -->
+<h1 mat-dialog-title>Nuevo Producto</h1>
+<div mat-dialog-content>
+    <form [formGroup]="productoForm">
+        <mat-form-field>
+            <input matInput placeholder="Nombre" formControlName="nombre">
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput placeholder="Cantidad" formControlName="cantidad">
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput placeholder="Cantidad en reserva" formControlName="reserva">
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput placeholder="Precio compra" formControlName="precio_compra">
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput placeholder="Precio venta" formControlName="precio_venta">
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput placeholder="Medida" formControlName="medida">
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput placeholder="Categoria" formControlName="id_categoria">
+        </mat-form-field>
+        
+    </form>
+</div>
+<div mat-dialog-actions>
+    <button mat-button (click)="cerrarDialog()">Cancelar</button>
+    <button mat-button color="primary" (click)="guardarNuevoProducto()">Guardar Producto</button>
+</div>

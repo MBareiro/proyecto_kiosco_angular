@@ -8,21 +8,26 @@
 
             <div class="row mb-3">
                 <div class="col-md-3">
-                  <div class="form-group">
-                    <label for="nombre">Nombre</label>
-                    <input type="text" class="form-control" id="nombre" placeholder="Buscar por nombre" [(ngModel)]="filtroNombre" (input)="aplicarFiltro()" />
-                  </div>
+                    <div class="form-group">
+                        <label for="nombre">Nombre</label>
+                        <input type="text" class="form-control" id="nombre" placeholder="Buscar por nombre"
+                            [(ngModel)]="filtroNombre" (input)="aplicarFiltro()" />
+                    </div>
                 </div>
-                <div class="col-md-5 d-flex justify-content-between align-items-end">
-                  <div class="form-group">
-                    <button type="button" class="btn btn-dark" (click)="limpiarFiltro()">Limpiar Filtro</button>
-                  </div>
-                  <div class="form-group">
-                    <button type="button" class="btn btn-primary" (click)="abrirDialogoNuevoProveedor()">Crear Proveedor</button>
-                  </div>
+                <div class="col-md-4 d-flex justify-content-between align-items-end">
+                    <div class="form-group">
+                        <button type="button" class="btn btn-dark" (click)="limpiarFiltro()">Limpiar Filtro</button>
+                    </div>
+                    <div class="form-group">
+                        <button type="button" class="btn btn-primary" (click)="abrirDialogoNuevoProveedor()">Crear
+                            Proveedor</button>
+                    </div>
+                    <button mat-mini-fab color="primary" aria-label="" (click)="generarPDF()" matTooltip="Imprimir listado">
+                        <mat-icon>print</mat-icon>
+                      </button>
+                      
                 </div>
-              </div>
-              
+            </div>
 
             <div class="table-responsive">
                 <table class="table table-hover">
@@ -45,19 +50,21 @@
                             <td>{{ proveedor.direccion }}</td>
                             <td class="p-1">
                                 <div class="d-flex">
-                                    <button mat-mini-fab color="primary" aria-label="" class="m-1 p-1" (click)="eliminarProveedor(proveedor.id)">
+                                    <button mat-mini-fab color="primary" aria-label="" class="m-1 p-1" color="warn"
+                                        (click)="eliminarProveedor(proveedor.id)">
                                         <mat-icon>delete</mat-icon>
                                     </button>
-                                    <button mat-mini-fab color="primary" aria-label="" class="m-1 p-1" (click)="editarProveedor(proveedor.id.toString())">
+                                    <button mat-mini-fab color="primary" aria-label="" class="m-1 p-1"
+                                        (click)="editarProveedor(proveedor.id.toString())">
                                         <mat-icon>edit</mat-icon>
                                     </button>
                                 </div>
                             </td>
-                                             
+
                         </tr>
                 </table>
-            </div>
-
-
+            </div>       
+                 
         </div>
+        
     </div>

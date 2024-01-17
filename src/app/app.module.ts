@@ -30,6 +30,18 @@ import { ReportesComponent } from './components/reportes/reportes.component';
 import { EditarProveedorDialogComponent } from './components/editar-proveedor-dialog/editar-proveedor-dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { NuevoProveedorDialogComponent } from './components/nuevo-proveedor-dialog/nuevo-proveedor-dialog.component';
+import { NuevoProductoDialogComponent } from './components/nuevo-producto-dialog/nuevo-producto-dialog.component';
+import { EditarProductoDialogComponent } from './components/editar-producto-dialog/editar-producto-dialog.component';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { SalidasHistorialComponent } from './components/salidas-historial/salidas-historial.component';
+import { ProductosTopComponent } from './components/productos-top/productos-top.component';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatNativeDateModule} from '@angular/material/core';
+import { SalidasDetalleDialogComponent } from './components/salidas-detalle-dialog/salidas-detalle-dialog.component';
+import { EntradaDetalleDialogComponent } from './components/entrada-detalle-dialog/entrada-detalle-dialog.component';
+import { IngresosHistorialComponent } from './components/ingresos-historial/ingresos-historial.component';
+import { DatePipe } from '@angular/common';
+import { TopProductosComponent } from './components/top-productos/top-productos.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -41,7 +53,16 @@ import { NuevoProveedorDialogComponent } from './components/nuevo-proveedor-dial
     ProductosComponent,
     ReportesComponent,
     EditarProveedorDialogComponent,
-    NuevoProveedorDialogComponent
+    NuevoProveedorDialogComponent,
+    NuevoProductoDialogComponent,
+    EditarProductoDialogComponent,
+    SalidasHistorialComponent,
+    ProductosTopComponent,
+    SalidasDetalleDialogComponent,
+    EntradaDetalleDialogComponent,
+    IngresosHistorialComponent,
+    TopProductosComponent
+
   ],
   imports: [
     BrowserModule,
@@ -63,9 +84,12 @@ import { NuevoProveedorDialogComponent } from './components/nuevo-proveedor-dial
     MatSnackBarModule,
     MatSelectModule,
     MatTableModule,
-    MatDialogModule    
+    MatDialogModule,
+    MatTooltipModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
-  providers: [],
+  providers: [DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

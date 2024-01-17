@@ -1,32 +1,178 @@
 import { Component } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { ProductService } from 'src/app/services/product.service';
+import { EditarProductoDialogComponent } from '../editar-producto-dialog/editar-producto-dialog.component';
+import { NuevoProductoDialogComponent } from '../nuevo-producto-dialog/nuevo-producto-dialog.component';
+import * as pdfMake from 'pdfmake/build/pdfmake';
+import * as pdfFonts from 'pdfmake/build/vfs_fonts';
+(pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
 
-export interface PeriodicElement {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
+export interface Producto {
+  id: number;
+  nombre: string;
+  cantidad: string;
+  precio_venta: string;
+  medida: string;
+  categoria: string;
 }
 
-const ELEMENT_DATA: PeriodicElement[] = [
-  {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
-  {position: 2, name: 'Helium', weight: 4.0026, symbol: 'He'},
-  {position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li'},
-  {position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be'},
-  {position: 5, name: 'Boron', weight: 10.811, symbol: 'B'},
-  {position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C'},
-  {position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N'},
-  {position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O'},
-  {position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F'},
-  {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
-];
-
+const ELEMENT_DATA: Producto[] = [];
 
 @Component({
   selector: 'app-productos',
   templateUrl: './productos.component.html',
-  styleUrls: ['./productos.component.css']
+  styleUrls: ['./productos.component.css'],
 })
 export class ProductosComponent {
   displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
   dataSource = ELEMENT_DATA;
+  productos: any[] = [];
+  filtroNombre: string = '';
+  productoSeleccionado: Producto = {
+    id: 0,
+    nombre: '',
+    cantidad: '',
+    precio_venta: '',
+    medida: '',
+    categoria: '',
+  };
+
+  constructor(
+    private productoService: ProductService,
+    private dialog: MatDialog
+  ) {}
+  ngOnInit(): void {
+    // Inicializa la tabla con 10 filas vacías
+    this.dataSource = [];
+    this.cargarProductos();
+  }
+  generarPDF() {
+    const documentDefinition: any = {
+      content: [
+        { text: 'Lista de Productos', style: 'header' },
+        '\n',
+        {
+          table: {
+            headerRows: 1,
+            body: [
+              ['Cod. Prod.', 'Nombre', 'Cantidad', 'Reserva', 'Precio venta', 'Medida']
+            ]
+          }
+        }
+      ],
+      styles: {
+        header: {
+          fontSize: 18,
+          bold: true
+        }
+      }
+    };
+  
+    // Agrega las filas de datos de productos al body de la tabla en documentDefinition
+    this.productos.forEach(producto => {
+      (documentDefinition.content[2] as { table: { body: string[][] } }).table.body.push([
+        producto.id,
+        producto.nombre,
+        producto.cantidad,
+        producto.reserva,
+        producto.precio_venta,
+        producto.medida
+      ]);
+    });
+  
+    pdfMake.createPdf(documentDefinition).open();
+  }
+  
+  cargarProductos() {
+    // Carga la lista de productos
+    this.productoService.getProductos().subscribe(
+      (productos) => {
+        this.productos = productos;
+        console.log(this.productos);
+      },
+      (error) => {
+        console.error('Error al obtener la lista de productos', error);
+      }
+    );
+  }
+
+  aplicarFiltro() {
+    // Filtra los productos por nombre
+    this.productos = this.productos.filter((producto) =>
+      producto.nombre.toLowerCase().includes(this.filtroNombre.toLowerCase())
+    );
+  }
+  limpiarFiltro() {
+    this.filtroNombre = '';
+    this.cargarProductos();
+  }
+
+  abrirDialogoNuevoProducto() {
+    const dialogRef = this.dialog.open(NuevoProductoDialogComponent, {
+      width: '260px',
+    });
+
+    dialogRef.afterClosed().subscribe((nuevoProducto) => {
+      if (nuevoProducto) {
+        // Lógica para agregar el nuevo producto
+        this.productoService.crearProducto(nuevoProducto).subscribe(
+          (resultado) => {
+            console.log('Producto agregado correctamente', resultado);
+            this.cargarProductos();
+          },
+          (error) => {
+            console.error('Error al agregar el producto', error);
+          }
+        );
+      }
+    });
+  }
+
+  eliminarProducto(idProducto: number) {
+    // Lógica para eliminar un producto
+    this.productoService.deleteProducto(idProducto).subscribe(
+      () => {
+        console.log('Producto eliminado correctamente.');
+        // Vuelve a cargar la lista de productoes después de la eliminación
+        this.cargarProductos();
+      },
+      (error) => {
+        console.error('Error al eliminar el producto', error);
+      }
+    );
+  }
+  editarProducto(id: string) {
+    // Mueve la lógica del diálogo dentro de la suscripción
+    this.productoService.getProductoById(id).subscribe(
+      (producto) => {
+        this.productoSeleccionado = producto;
+
+        if (this.productoSeleccionado) {
+          const dialogRef = this.dialog.open(EditarProductoDialogComponent, {
+            width: '260px',
+            data: { ...this.productoSeleccionado },
+          });
+
+          dialogRef.afterClosed().subscribe((result: Producto | undefined) => {
+            if (result) {
+              this.productoService.actualizarProducto(result).subscribe(
+                (resultado) => {
+                  console.log('Producto actualizado correctamente', resultado);
+                  this.cargarProductos();
+                },
+                (error) => {
+                  console.error('Error al actualizar el producto', error);
+                }
+              );
+            }
+          });
+        }
+      },
+      (error) => {
+        console.error('Error al obtener el producto', error);
+      }
+    );
+  }
+  
+  
 }

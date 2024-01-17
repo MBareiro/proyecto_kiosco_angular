@@ -1,0 +1,52 @@
+<!-- Contenido del componente -->
+<div class="container mt-4">
+  <div class="card">
+    <div class="card-header bg-dark text-white">
+      <h1 class="card-title">Historial de Salidas</h1>
+    </div>
+    <div class="card-body">
+
+      <div class="row mb-3">
+        <div class="col">
+          <mat-form-field class="example-form-field">
+            <mat-label>Rango de fechas</mat-label>
+            <mat-date-range-input [formGroup]="campaignTwo" [rangePicker]="campaignTwoPicker">
+              <input matStartDate placeholder="Start date" formControlName="start" (dateChange)="filtrarPorFecha()">
+              <input matEndDate placeholder="End date" formControlName="end" (dateChange)="filtrarPorFecha()">
+            </mat-date-range-input>
+            
+            <mat-datepicker-toggle matIconSuffix [for]="campaignTwoPicker"></mat-datepicker-toggle>
+            <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+            <mat-date-range-picker #campaignTwoPicker></mat-date-range-picker>
+          </mat-form-field>
+        </div>
+
+      </div>
+
+      <div class="table-responsive table-container">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th scope="col">Cod. Prod.</th>
+              <th scope="col">Fecha y hora</th>
+              <th scope="col">Importe Total</th>
+              <th scope="col">Acciones</th>
+            </tr>
+          </thead>
+           <tbody class="table-group-divider">
+              <tr *ngFor="let salida of salidas; let i = index">
+                <td>{{ salida.id }}</td>
+                <td>{{ salida.fecha | date: 'dd/MM/yyyy HH:mm:ss' }}</td>
+                <td>{{ salida.importe_total | currency:'USD':'symbol':'1.2-2'}}</td>
+                <td>
+                  <button mat-mini-fab color="primary" aria-label="" class="m-1 p-1" (click)="verSalida(salida.id)"
+                    >
+                    <mat-icon>search</mat-icon>
+                  </button>
+                </td>
+              </tr>
+            </tbody> 
+        </table>
+      </div>
+    </div>
+  </div>

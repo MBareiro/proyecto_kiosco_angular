@@ -7,6 +7,9 @@ import { ProveedoresComponent } from './components/proveedores/proveedores.compo
 import { SalidasComponent } from './components/salidas/salidas.component';
 import { ProductosComponent } from './components/productos/productos.component';
 import { ReportesComponent } from './components/reportes/reportes.component';
+import { IngresosHistorialComponent } from './components/ingresos-historial/ingresos-historial.component';
+import { SalidasHistorialComponent } from './components/salidas-historial/salidas-historial.component';
+import { ProductosTopComponent } from './components/productos-top/productos-top.component';
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' }, // Redirigir a login por defecto
   { path: 'login', component: LoginComponent },
@@ -18,7 +21,9 @@ const routes: Routes = [
       { path: 'productos', component: ProductosComponent },
       { path: 'proveedores', component: ProveedoresComponent },
       { path: 'reportes', component: ReportesComponent },
-      // Otras rutas secundarias según sea necesario
+      { path: 'ingresos_historial', component: IngresosHistorialComponent },
+      { path: 'salidas_historial', component: SalidasHistorialComponent },
+      { path: 'productos_top', component: ProductosTopComponent },
     ]
   },
 ];

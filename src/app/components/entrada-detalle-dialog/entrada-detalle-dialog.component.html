@@ -1,0 +1,25 @@
+<!-- salidas-detalle-dialog.component.html -->
+
+<div mat-dialog-content>
+  <h2>Detalles de Ingreso</h2>
+
+  <div *ngFor="let detalle of detalles">
+    <div class="detalle-item">
+      <p><strong>Producto:</strong> {{ detalle.nombre_producto }}</p>
+      <p><strong>Cantidad:</strong> {{ detalle.cantidad }}</p>
+      <p><strong>Importe:</strong> {{ detalle.importe | currency:'USD':'symbol':'1.2-2' }}</p>
+    </div>
+    <hr />
+  </div>
+  <!-- Mostrar la suma total -->
+<div class="suma-total">
+  <p><strong>Suma Total:</strong> {{ sumaTotal | currency:'USD':'symbol':'1.2-2' }}</p>
+</div>
+</div>
+
+<div mat-dialog-actions>
+  <button mat-button (click)="cerrarDialogo()">Cerrar</button>
+  <button mat-mini-fab color="primary" aria-label="" (click)="generarPDF()" matTooltip="Imprimir listado">
+    <mat-icon>print</mat-icon>
+  </button>
+</div>
