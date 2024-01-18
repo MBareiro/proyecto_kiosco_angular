@@ -67,3 +67,15 @@ p{
   margin-top: 15px;
 }
 
+/* Estilo para Snackbar de error */
+.error-snackbar {
+  background-color: #d32f2f; /* Color de fondo rojo */
+  color: #fff; /* Texto en color blanco */
+}
+
+/* Estilo para Snackbar de éxito */
+.success-snackbar {
+  background-color: #4caf50; /* Color de fondo verde */
+  color: #fff; /* Texto en color blanco */
+}
+

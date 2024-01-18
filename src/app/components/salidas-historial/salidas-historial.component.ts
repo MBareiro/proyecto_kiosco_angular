@@ -48,7 +48,6 @@ export class SalidasHistorialComponent {
     this.salidaService.getSalidas().subscribe(
       (salidas) => {
         this.salidas = salidas;
-        console.log(this.salidas);
         this.salidasOriginal = [...salidas];
         this.filtrarPorFecha()
       },
@@ -77,8 +76,7 @@ export class SalidasHistorialComponent {
         return fechaSalida >= startDateTime && fechaSalida <= endDateTime;
       });
     }
-  }
-  
+  }  
   
   verSalida(id: number) {
     // Llama al servicio para obtener los detalles de la salida por su ID
@@ -96,7 +94,6 @@ export class SalidasHistorialComponent {
         console.error('Error al obtener detalles de la salida', error);
       }
     );
-  }
-  
+  } 
   
 }

@@ -13,7 +13,7 @@ export interface Producto {
   cantidad: string;
   precio_venta: string;
   medida: string;
-  categoria: string;
+  id_categoria: string;
 }
 
 const ELEMENT_DATA: Producto[] = [];
@@ -34,7 +34,7 @@ export class ProductosComponent {
     cantidad: '',
     precio_venta: '',
     medida: '',
-    categoria: '',
+    id_categoria: '',
   };
 
   constructor(

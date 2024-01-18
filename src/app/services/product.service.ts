@@ -33,4 +33,9 @@ export class ProductService {
     // Utiliza el método HTTP PUT para actualizar el producto
     return this.http.put(url, producto);
   }
+
+  obtenerTopProductosMasVendidos(): Observable<any[]> {
+    const url = `${this.apiUrl}/productos_mas_vendidos`;
+    return this.http.get<any[]>(url);
+  }
 }

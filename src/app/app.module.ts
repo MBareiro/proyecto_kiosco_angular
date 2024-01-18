@@ -21,8 +21,8 @@ import { IngresosComponent } from './components/ingresos/ingresos.component';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import {MatSelectModule} from '@angular/material/select';
-import {MatTableModule} from '@angular/material/table';
+import { MatSelectModule } from '@angular/material/select';
+import { MatTableModule } from '@angular/material/table';
 import { ProveedoresComponent } from './components/proveedores/proveedores.component';
 import { SalidasComponent } from './components/salidas/salidas.component';
 import { ProductosComponent } from './components/productos/productos.component';
@@ -35,13 +35,14 @@ import { EditarProductoDialogComponent } from './components/editar-producto-dial
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { SalidasHistorialComponent } from './components/salidas-historial/salidas-historial.component';
 import { ProductosTopComponent } from './components/productos-top/productos-top.component';
-import {MatDatepickerModule} from '@angular/material/datepicker';
-import {MatNativeDateModule} from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 import { SalidasDetalleDialogComponent } from './components/salidas-detalle-dialog/salidas-detalle-dialog.component';
 import { EntradaDetalleDialogComponent } from './components/entrada-detalle-dialog/entrada-detalle-dialog.component';
 import { IngresosHistorialComponent } from './components/ingresos-historial/ingresos-historial.component';
-import { DatePipe } from '@angular/common';
-import { TopProductosComponent } from './components/top-productos/top-productos.component';
+import { CurrencyPipe, DatePipe } from '@angular/common';
+import { CommonModule } from '@angular/common';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -60,8 +61,7 @@ import { TopProductosComponent } from './components/top-productos/top-productos.
     ProductosTopComponent,
     SalidasDetalleDialogComponent,
     EntradaDetalleDialogComponent,
-    IngresosHistorialComponent,
-    TopProductosComponent
+    IngresosHistorialComponent
 
   ],
   imports: [
@@ -87,9 +87,10 @@ import { TopProductosComponent } from './components/top-productos/top-productos.
     MatDialogModule,
     MatTooltipModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    CommonModule
   ],
-  providers: [DatePipe],
+  providers: [DatePipe, CurrencyPipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -54,6 +54,7 @@
               <th scope="col">Reserva</th>
               <th scope="col">Precio venta</th>
               <th scope="col">Medida</th>
+              <th scope="col">Categoria</th>
               <th scope="col">Acciones</th>
             </tr>
           </thead>
@@ -63,8 +64,9 @@
               <td>{{ producto.nombre }}</td>
               <td>{{ producto.cantidad }}</td>
               <td>{{ producto.reserva }}</td>
-              <td>{{ producto.precio_venta }}</td>
+              <td>{{ producto.precio_venta | currency}}</td>
               <td>{{ producto.medida }}</td>
+              <td>{{ producto.id_categoria }}</td>
               <td class="p-1">
                 <div class="d-flex">
                   <button mat-mini-fab color="primary" aria-label="" class="m-1 p-1"  color="warn"

@@ -2,7 +2,8 @@ import { Component, Renderer2 } from '@angular/core';
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import { ProductService } from 'src/app/services/product.service';
 import { SalidaService } from 'src/app/services/salida.service';
-
+import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
+import { CurrencyPipe, DatePipe } from '@angular/common';
 export interface PeriodicElement {
   position: number;
   cod_product: string;
@@ -10,8 +11,9 @@ export interface PeriodicElement {
   cantidad: number;
   precio_venta: number;
   stock: number;
-  importe: number;
+  importe: number; // Asegúrate de que importe sea de tipo number
 }
+
 
 const ELEMENT_DATA: PeriodicElement[] = [];
 
@@ -31,6 +33,8 @@ export class SalidasComponent {
   total: number = 0;
   vuelto: number = 0;
   imprimirRecibo: boolean = false;
+  sumaTotal: number = 0; // Inicializa la sumaTotal como un número
+  fecha: any;
 
   displayedColumns: string[] = [
     'Cod. Prod.',
@@ -39,11 +43,18 @@ export class SalidasComponent {
     'Precio venta',
     'Stock',
     'Importe',
-    'Eliminar'
+    'Eliminar',
   ];
   dataSource: PeriodicElement[] = ELEMENT_DATA;
 
-  constructor(private productoService: ProductService, private salidaService: SalidaService, private renderer: Renderer2) { }
+  constructor(
+    private productoService: ProductService,
+    private salidaService: SalidaService,
+    private renderer: Renderer2,
+    private snackBar: MatSnackBar,
+    private currencyPipe: CurrencyPipe,
+    private datePipe: DatePipe  // Inyecta el servicio DatePipe
+  ) { }
 
   ngOnInit(): void {
     // Inicializa la tabla con 10 filas vacías
@@ -66,61 +77,100 @@ export class SalidasComponent {
   Producto() {
     // Verifica si la opción seleccionada no es la deshabilitada
     if (this.selectedProduct && this.selectedProduct !== '-') {
-      const producto = this.productos[this.selectedProduct - 1];
+      // Convertir this.selectedProduct a un número entero
+      const selectedProductId = parseInt(this.selectedProduct, 10);
+
+      // Buscar el producto por ID
+      const producto = this.productos.find(
+        (producto) => producto.id === selectedProductId
+      );
       console.log(producto);
 
       this.isProductoSeleccionado = true;
       // Remueve la clase is-invalid si está presente
-      this.renderer.removeClass(document.getElementById('productos'), 'is-invalid');
+      this.renderer.removeClass(
+        document.getElementById('productos'),
+        'is-invalid'
+      );
       this.stockInput = producto.cantidad;
       this.precioVentaInput = producto.precio_venta;
-
     } else {
       this.isProductoSeleccionado = false;
       // Agrega la clase is-invalid si la opción no es válida
-      this.renderer.addClass(document.getElementById('productos'), 'is-invalid');
+      this.renderer.addClass(
+        document.getElementById('productos'),
+        'is-invalid'
+      );
     }
   }
 
   CantidadValidacion() {
-    // Verifica si el valor de cantidad es un número válido
-    if (this.cantidadInput !== null && typeof this.cantidadInput === 'number' && isFinite(this.cantidadInput)) {
+    // Verifica si el valor de cantidad es un número válido y mayor o igual a cero
+    if (
+      this.cantidadInput !== null &&
+      typeof this.cantidadInput === 'number' &&
+      isFinite(this.cantidadInput) &&
+      this.cantidadInput > 0
+    ) {
       // Valor válido, remueve la clase is-invalid
-      this.renderer.removeClass(document.getElementById('cantidad'), 'is-invalid');
+      this.renderer.removeClass(
+        document.getElementById('cantidad'),
+        'is-invalid'
+      );
     } else {
       // Valor no válido, agrega la clase is-invalid
       this.renderer.addClass(document.getElementById('cantidad'), 'is-invalid');
+      return;
     }
   }
-
-
+  mostrarSnackbar(
+    mensaje: string,
+    panelClass: string[] = [],
+    duration: number = 5000
+  ): void {
+    const config: MatSnackBarConfig = {
+      duration: duration,
+      panelClass: panelClass,
+    };
+    this.snackBar.open(mensaje, 'Cerrar', config);
+  }
 
   registrarProducto() {
-
     // Validación de campos
     this.CantidadValidacion();
+    // Verifica que la cantidad sea mayor a cero
     if (
       this.cantidadInput === null ||
+      this.cantidadInput <= 0 ||
       this.precioVentaInput === null ||
       this.stockInput === null ||
       this.selectedProduct <= 0
     ) {
       // Muestra un mensaje de error
-      console.log('Por favor, ingrese valores válidos para cantidad, precio venta y stock.');
+      console.log('Por favor, ingrese una cantidad válida.');
+      this.mostrarSnackbar('Por favor, ingrese una cantidad válida.', [
+        'error-snackbar',
+      ]);
       return;
     }
 
-    if (
-      this.cantidadInput >
-      this.stockInput
-    ) {
+    if (this.cantidadInput > this.stockInput) {
       // Muestra un mensaje de error
       console.log('Stock insuficiente');
+      this.mostrarSnackbar('Stock insuficiente.', ['error-snackbar']);
       return;
     }
 
-    const producto = this.productos[this.selectedProduct - 1];
-    const productoExistente = this.dataSource.find((item) => item.cod_product === producto.id);
+    // Convertir this.selectedProduct a un número entero
+    const selectedProductId = parseInt(this.selectedProduct, 10);
+
+    // Buscar el producto por ID
+    const producto = this.productos.find(
+      (producto) => producto.id === selectedProductId
+    );
+    const productoExistente = this.dataSource.find(
+      (item) => item.cod_product === producto.id
+    );
 
     if (productoExistente) {
       // Muestra una alerta, mensaje o toma la acción que consideres apropiada
@@ -130,7 +180,8 @@ export class SalidasComponent {
 
     // Manejo de valores nulos
     const cantidad = this.cantidadInput !== null ? this.cantidadInput : 0;
-    const precioVenta = this.precioVentaInput !== null ? this.precioVentaInput : 0;
+    const precioVenta =
+      this.precioVentaInput !== null ? this.precioVentaInput : 0;
     const stock = this.stockInput !== null ? this.stockInput : 0;
 
     const newRow: PeriodicElement = {
@@ -185,7 +236,11 @@ export class SalidasComponent {
   // Método para actualizar el total
   actualizarVuelto() {
     // Verifica si el valor de recibidoInput es un número válido
-    if (this.recibidoInput !== null && typeof this.recibidoInput === 'number' && isFinite(this.recibidoInput)) {
+    if (
+      this.recibidoInput !== null &&
+      typeof this.recibidoInput === 'number' &&
+      isFinite(this.recibidoInput)
+    ) {
       // Calcula el vuelto restando el total al valor recibidoInput
       this.vuelto = this.recibidoInput - this.total;
     } else {
@@ -194,10 +249,11 @@ export class SalidasComponent {
     }
   }
 
-
   eliminarRegistro(position: number) {
     // Encuentra el índice del registro a eliminar
-    const index = this.dataSource.findIndex((element) => element.position === position);
+    const index = this.dataSource.findIndex(
+      (element) => element.position === position
+    );
 
     if (index !== -1) {
       // Elimina el registro de la tabla
@@ -228,6 +284,9 @@ export class SalidasComponent {
     // Check if there are entries in the table
     if (this.dataSource.length === 0) {
       console.log('La tabla está vacía. No hay datos para guardar.');
+      this.mostrarSnackbar('La tabla está vacía. No hay datos para guardar.', [
+        'error-snackbar',
+      ]);
       return;
     }
 
@@ -250,31 +309,44 @@ export class SalidasComponent {
         }));
 
         // Call the saveSalidaDetalle method from the IngresosService to save the details
-        this.salidaService.saveSalidaDetalle(salidaResponse.id, detallesData).subscribe(
-          (detallesResponse) => {
-            console.log('Salida Detalle saved successfully:', detallesResponse);
-
-            // Verifica si el checkbox está marcado antes de generar el PDF
-            if (this.imprimirRecibo) {
-              this.generarPDF();
+        this.salidaService
+          .saveSalidaDetalle(salidaResponse.id, detallesData)
+          .subscribe(
+            (detallesResponse) => {
+              console.log(
+                'Salida Detalle saved successfully:',
+                detallesResponse
+              );
+              this.mostrarSnackbar(
+                'Operación completada con éxito.',
+                ['success-snackbar'],
+                2000
+              );
+              // Verifica si el checkbox está marcado antes de generar el PDF
+              if (this.imprimirRecibo) {
+                this.generarPDF();
+              }
+              // Reset the form or perform any other necessary actions after saving
+              this.limpiarTabla();
+            },
+            (error) => {
+              console.error('Error saving Salida Detalle:', error);
             }
-            // Reset the form or perform any other necessary actions after saving
-            this.limpiarTabla();
-          },
-          (error) => {
-            console.error('Error saving Salida Detalle:', error);
-          }
-        );
+          );
       },
       (error) => {
         console.error('Error saving Entrada:', error);
       }
     );
-    this.obtenerProductos()
+    this.obtenerProductos();
   }
 
   generarPDF() {
-console.log("SEEEEE");
+    // Formatea la fecha con el servicio DatePipe
+    const fechaFormateada = this.datePipe.transform(
+      this.fecha || new Date(),
+      'dd/MM/yyyy HH:mm:ss'
+    );
 
     // Contenido del documento PDF
     const documentDefinition: any = {
@@ -285,31 +357,66 @@ console.log("SEEEEE");
           table: {
             headerRows: 1,
             body: [
-              ['Cod. Prod.', 'Nombre', 'Cantidad', 'Precio Venta', 'Importe']
-            ]
-          }
-        }
+              ['Cod. Prod.', 'Nombre', 'Cantidad', 'Precio Venta', 'Importe'],
+            ],
+          },
+        },
       ],
       styles: {
         header: {
           fontSize: 18,
-          bold: true
-        }
-      }
+          bold: true,
+        },
+      },
     };
 
+
     // Agrega las filas de datos de productos al body de la tabla en documentDefinition
-    this.dataSource.forEach(producto => {
-      (documentDefinition.content[2] as { table: { body: string[][] } }).table.body.push([
-        producto.cod_product,
+    this.dataSource.forEach((producto) => {
+      (
+        documentDefinition.content[2] as { table: { body: string[][] } }
+      ).table.body.push([
+        producto.cod_product.toString(),
         producto.nombre,
         producto.cantidad.toString(),
-        producto.precio_venta.toString(),
-        producto.importe.toString()
+        this.formatCurrency(producto.precio_venta), 
+        this.formatCurrency(producto.importe),  // Utiliza la función auxiliar para manejar null
       ]);
     });
 
+    // Agrega el total al final del contenido
+    documentDefinition.content.push(
+      '\n',
+      {
+        text: `Total: ${this.currencyPipe.transform(
+          this.total,
+          'USD',
+          'symbol'
+        )}`,
+        bold: true,
+      },
+      '\n',
+      { text: `Fecha: ${fechaFormateada}`, bold: true }
+    );
+
     // Abre el documento PDF en una nueva ventana
     pdfMake.createPdf(documentDefinition).open();
+  }
+
+
+  calcularSumaTotal(): number {
+    this.sumaTotal = this.dataSource.reduce(
+      (total, detalle) => total + detalle.importe,
+      0
+    );
+    return this.sumaTotal;
+  }
+
+  // Agrega esta función auxiliar en la clase SalidasComponent
+  formatCurrency(value: number | null): string {
+    if (value === null) {
+      return ''; // O puedes manejarlo de otra manera si es necesario
+    }
+    return this.currencyPipe.transform(value, 'USD', 'symbol') || '';
   }
 }

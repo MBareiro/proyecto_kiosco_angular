@@ -2,6 +2,7 @@ import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { DatePipe } from '@angular/common';
 import * as pdfMake from 'pdfmake/build/pdfmake';
+import { CurrencyPipe } from '@angular/common';
 
 @Component({
   selector: 'app-entrada-detalle-dialog',
@@ -13,7 +14,7 @@ export class EntradaDetalleDialogComponent {
   sumaTotal: number = 0;  // Inicializa la sumaTotal como un número
   fecha: any;
 
-  constructor(
+  constructor(private currencyPipe: CurrencyPipe,
     public dialogRef: MatDialogRef<EntradaDetalleDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private datePipe: DatePipe  // Inyecta el servicio DatePipe
@@ -26,7 +27,7 @@ export class EntradaDetalleDialogComponent {
   generarPDF() {
     // Formatea la fecha con el servicio DatePipe
     const fechaFormateada = this.datePipe.transform(this.fecha, 'dd/MM/yyyy HH:mm:ss');
-
+  
     const documentDefinition: any = {
       content: [
         { text: 'Entrada detalle', style: 'header' },
@@ -47,27 +48,28 @@ export class EntradaDetalleDialogComponent {
         }
       }
     };
-
+  
     // Agrega las filas de datos de detalles al body de la tabla en documentDefinition
     this.detalles.forEach(detalle => {
       (documentDefinition.content[2] as { table: { body: string[][] } }).table.body.push([
         detalle.nombre_producto,
         detalle.cantidad,
-        detalle.importe
+        this.currencyPipe.transform(detalle.importe, 'USD', 'symbol'),
       ]);
     });
-
+  
     // Agrega el total al final del contenido
     documentDefinition.content.push(
       '\n',
-      { text: `Total: ${this.calcularSumaTotal()}`, bold: true },
+      { text: `Total: ${this.currencyPipe.transform(this.calcularSumaTotal(), 'USD', 'symbol')}`, bold: true },
       '\n',
       { text: `Fecha: ${fechaFormateada}`, bold: true }
     );
-
+  
     // Crea y abre el PDF
     pdfMake.createPdf(documentDefinition).open();
   }
+  
 
   calcularSumaTotal(): number {
     this.sumaTotal = this.detalles.reduce((total, detalle) => total + parseFloat(detalle.importe), 0);
