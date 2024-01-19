@@ -59,15 +59,15 @@
             </tr>
           </thead>
           <tbody class="table-group-divider">
-            <tr *ngFor="let producto of productos; let i = index">
-              <td>{{ producto.id }}</td>
-              <td>{{ producto.nombre }}</td>
-              <td>{{ producto.cantidad }}</td>
-              <td>{{ producto.reserva }}</td>
-              <td>{{ producto.precio_venta | currency}}</td>
-              <td>{{ producto.medida }}</td>
-              <td>{{ producto.id_categoria }}</td>
-              <td class="p-1">
+            <tr *ngFor="let producto of productos; let i = index" >
+              <td [class.resaltar-rojo]="producto.cantidad <= producto.reserva">{{ producto.id }}</td>
+              <td [class.resaltar-rojo]="producto.cantidad <= producto.reserva">{{ producto.nombre }}</td>
+              <td [class.resaltar-rojo]="producto.cantidad <= producto.reserva">{{ producto.cantidad }}</td>
+              <td [class.resaltar-rojo]="producto.cantidad <= producto.reserva">{{ producto.reserva }}</td>
+              <td [class.resaltar-rojo]="producto.cantidad <= producto.reserva">{{ producto.precio_venta | currency}}</td>
+              <td [class.resaltar-rojo]="producto.cantidad <= producto.reserva">{{ producto.medida }}</td>
+              <td [class.resaltar-rojo]="producto.cantidad <= producto.reserva">{{ producto.id_categoria }}</td>
+              <td class="p-1" [class.resaltar-rojo]="producto.cantidad <= producto.reserva">
                 <div class="d-flex">
                   <button mat-mini-fab color="primary" aria-label="" class="m-1 p-1"  color="warn"
                     (click)="eliminarProducto(producto.id)">

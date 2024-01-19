@@ -42,6 +42,7 @@ import { EntradaDetalleDialogComponent } from './components/entrada-detalle-dial
 import { IngresosHistorialComponent } from './components/ingresos-historial/ingresos-historial.component';
 import { CurrencyPipe, DatePipe } from '@angular/common';
 import { CommonModule } from '@angular/common';
+import { CategoriasComponent } from './components/categorias/categorias.component';
 
 @NgModule({
   declarations: [
@@ -61,7 +62,8 @@ import { CommonModule } from '@angular/common';
     ProductosTopComponent,
     SalidasDetalleDialogComponent,
     EntradaDetalleDialogComponent,
-    IngresosHistorialComponent
+    IngresosHistorialComponent,
+    CategoriasComponent
 
   ],
   imports: [

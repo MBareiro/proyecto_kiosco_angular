@@ -84,3 +84,10 @@ p{
   max-height: 400px; /* Ajusta la altura máxima según tus necesidades */
   overflow-y: auto; /* Agrega una barra de desplazamiento vertical si es necesario */
 }
+
+/* En tu archivo de estilos CSS */
+.resaltar-rojo {
+  background-color: red !important;
+  color: white;
+  border: 2px solid black; /* Agrega este estilo para verificar si la clase se aplica */
+}

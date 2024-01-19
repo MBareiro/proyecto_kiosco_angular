@@ -10,10 +10,11 @@ import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 export interface Producto {
   id: number;
   nombre: string;
-  cantidad: string;
+  cantidad: number;
   precio_venta: string;
   medida: string;
   id_categoria: string;
+  reserva: number;
 }
 
 const ELEMENT_DATA: Producto[] = [];
@@ -31,10 +32,11 @@ export class ProductosComponent {
   productoSeleccionado: Producto = {
     id: 0,
     nombre: '',
-    cantidad: '',
+    cantidad: 0,
     precio_venta: '',
     medida: '',
     id_categoria: '',
+    reserva: 0,
   };
 
   constructor(
@@ -174,5 +176,9 @@ export class ProductosComponent {
     );
   }
   
+  obtenerClaseEstilo(producto: Producto): string {
+    console.log('Cantidad:', producto.cantidad, 'Reserva:', producto.reserva);
+    return producto.cantidad <= producto.reserva ? 'resaltar-rojo' : '';
+  }
   
 }
