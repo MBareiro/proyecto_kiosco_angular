@@ -1,0 +1,5 @@
+.container input,
+  .container select,
+  .container button {
+    margin-bottom: 10px;
+  }

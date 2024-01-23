@@ -53,23 +53,34 @@
               <th scope="col">Cantidad</th>
               <th scope="col">Reserva</th>
               <th scope="col">Precio venta</th>
-              <th scope="col">Medida</th>
+              <!-- <th scope="col">Medida</th> -->
               <th scope="col">Categoria</th>
               <th scope="col">Acciones</th>
             </tr>
           </thead>
           <tbody class="table-group-divider">
-            <tr *ngFor="let producto of productos; let i = index" >
-              <td [class.resaltar-rojo]="producto.cantidad <= producto.reserva">{{ producto.id }}</td>
-              <td [class.resaltar-rojo]="producto.cantidad <= producto.reserva">{{ producto.nombre }}</td>
-              <td [class.resaltar-rojo]="producto.cantidad <= producto.reserva">{{ producto.cantidad }}</td>
-              <td [class.resaltar-rojo]="producto.cantidad <= producto.reserva">{{ producto.reserva }}</td>
-              <td [class.resaltar-rojo]="producto.cantidad <= producto.reserva">{{ producto.precio_venta | currency}}</td>
-              <td [class.resaltar-rojo]="producto.cantidad <= producto.reserva">{{ producto.medida }}</td>
-              <td [class.resaltar-rojo]="producto.cantidad <= producto.reserva">{{ producto.id_categoria }}</td>
-              <td class="p-1" [class.resaltar-rojo]="producto.cantidad <= producto.reserva">
+            <tr *ngFor="let producto of productos; let i = index">
+              <td [class]="obtenerClaseEstilo(producto)">
+                {{ producto.id }}
+              </td>
+              <td [class]="obtenerClaseEstilo(producto)">
+                {{ producto.nombre }}
+              </td>
+              <td [class]="obtenerClaseEstilo(producto)">
+                {{ producto.cantidad }}
+              </td>
+              <td [class]="obtenerClaseEstilo(producto)">
+                {{ producto.reserva }}
+              </td>
+              <td [class]="obtenerClaseEstilo(producto)">
+                {{ producto.precio_venta | currency }}
+              </td>
+              <td [class]="obtenerClaseEstilo(producto)">
+                {{ producto.nombre_categoria }}
+              </td>
+              <td [class]="obtenerClaseEstilo(producto)">
                 <div class="d-flex">
-                  <button mat-mini-fab color="primary" aria-label="" class="m-1 p-1"  color="warn"
+                  <button mat-mini-fab color="primary" aria-label="" class="m-1 p-1" color="warn"
                     (click)="eliminarProducto(producto.id)">
                     <mat-icon>delete</mat-icon>
                   </button>
@@ -82,6 +93,6 @@
             </tr>
           </tbody>
         </table>
-      </div>  
+      </div>
     </div>
   </div>

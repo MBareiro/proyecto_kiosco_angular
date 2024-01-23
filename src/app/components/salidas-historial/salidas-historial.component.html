@@ -39,7 +39,7 @@
                 <td>{{ salida.fecha | date: 'dd/MM/yyyy HH:mm:ss' }}</td>
                 <td>{{ salida.importe_total | currency:'USD':'symbol':'1.2-2'}}</td>
                 <td>
-                  <button mat-mini-fab color="primary" aria-label="" class="m-1 p-1" (click)="verSalida(salida.id)"
+                  <button mat-mini-fab color="primary" aria-label="" class="m-1 p-1" (click)="verSalida(salida.id, salida.fecha)"
                     >
                     <mat-icon>search</mat-icon>
                   </button>

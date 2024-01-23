@@ -10,6 +10,8 @@ import { ReportesComponent } from './components/reportes/reportes.component';
 import { IngresosHistorialComponent } from './components/ingresos-historial/ingresos-historial.component';
 import { SalidasHistorialComponent } from './components/salidas-historial/salidas-historial.component';
 import { ProductosTopComponent } from './components/productos-top/productos-top.component';
+import { CategoriasComponent } from './components/categorias/categorias.component';
+
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' }, // Redirigir a login por defecto
   { path: 'login', component: LoginComponent },
@@ -24,10 +26,10 @@ const routes: Routes = [
       { path: 'ingresos_historial', component: IngresosHistorialComponent },
       { path: 'salidas_historial', component: SalidasHistorialComponent },
       { path: 'productos_top', component: ProductosTopComponent },
+      { path: 'categorias', component: CategoriasComponent },
     ]
   },
 ];
-
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

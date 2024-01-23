@@ -17,11 +17,16 @@
         <mat-form-field>
             <input matInput placeholder="Precio venta" formControlName="precio_venta">
         </mat-form-field>
-        <mat-form-field>
+        <!-- <mat-form-field>
             <input matInput placeholder="Medida" formControlName="medida">
-        </mat-form-field>
+        </mat-form-field> -->
         <mat-form-field>
-            <input matInput placeholder="Categoria" formControlName="id_categoria">
+            <mat-label>Categoría</mat-label>
+            <mat-select formControlName="id_categoria">
+                <mat-option *ngFor="let categoria of categorias" [value]="categoria.id">
+                    {{ categoria.nombre }}
+                </mat-option>
+            </mat-select>
         </mat-form-field>
         
     </form>

@@ -3,7 +3,6 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { EntradaService } from 'src/app/services/entrada.service';
 import { EntradaDetalleDialogComponent } from '../entrada-detalle-dialog/entrada-detalle-dialog.component';
-
 export interface Entrada {
   id: number;
   nombre: string;
@@ -48,7 +47,6 @@ export class IngresosHistorialComponent {
     this.entradaService.getEntradas().subscribe(
       (ingresos) => {
         this.ingresos = ingresos;
-        console.log(this.ingresos);
         this.ingresosOriginal = [...ingresos];
         this.filtrarPorFecha()
       },

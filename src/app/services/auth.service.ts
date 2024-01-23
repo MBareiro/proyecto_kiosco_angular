@@ -5,7 +5,7 @@ import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class AuthService {
   private baseUrl = `${environment.apiUrl}/usuarios`;
@@ -17,17 +17,17 @@ export class AuthService {
     return this.http.post(`${this.baseUrl}/login`, body);
   }
 
- /*  authorized() {
+  authorized() {
     const userName = localStorage.getItem('userName');
     const userId = localStorage.getItem('userId');
     const userRole = localStorage.getItem('userRole');
     if (!userName || !userId || !userRole) {
-      this.router.navigate(['/error-page']);
+      this.router.navigate(['/']);
     }
   }
 
   logout(): Observable<any> {
     // Realizar una solicitud POST al backend para cerrar la sesión
     return this.http.post(`${this.baseUrl}/logout`, {});
-  } */
+  }
 }

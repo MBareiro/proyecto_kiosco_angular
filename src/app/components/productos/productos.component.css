@@ -81,7 +81,7 @@ p{
 }
 
 .table-container {
-  max-height: 400px; /* Ajusta la altura máxima según tus necesidades */
+  max-height: 600px; /* Ajusta la altura máxima según tus necesidades */
   overflow-y: auto; /* Agrega una barra de desplazamiento vertical si es necesario */
 }
 

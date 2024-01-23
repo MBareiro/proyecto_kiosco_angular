@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 
@@ -17,7 +18,8 @@ export class LoginComponent {
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private snackBar: MatSnackBar
   ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -47,15 +49,31 @@ export class LoginComponent {
         } else {
           // Manejar el caso en el que las credenciales son incorrectas
           console.error('Credenciales incorrectas');
+          this.mostrarSnackbar('Credenciales incorrectas.', [
+            'error-snackbar',
+          ]);
         }
       },
       (error) => {
         const errorMessage = error['error'];
         // Manejar errores de la solicitud HTTP
         console.log(errorMessage);
-
+        this.mostrarSnackbar('Verifique su correo y contraseña.', [
+          'error-snackbar',
+        ]);
         console.error('Error en la solicitud:', error);
       }
     );
+  }
+  mostrarSnackbar(
+    mensaje: string,
+    panelClass: string[] = [],
+    duration: number = 5000
+  ): void {
+    const config: MatSnackBarConfig = {
+      duration: duration,
+      panelClass: panelClass,
+    };
+    this.snackBar.open(mensaje, 'Cerrar', config);
   }
 }

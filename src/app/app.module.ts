@@ -43,6 +43,8 @@ import { IngresosHistorialComponent } from './components/ingresos-historial/ingr
 import { CurrencyPipe, DatePipe } from '@angular/common';
 import { CommonModule } from '@angular/common';
 import { CategoriasComponent } from './components/categorias/categorias.component';
+import { NuevaCategoriaDialogComponent } from './components/nueva-categoria-dialog/nueva-categoria-dialog.component';
+import { EditarCategoriaDialogComponent } from './components/editar-categoria-dialog/editar-categoria-dialog.component';
 
 @NgModule({
   declarations: [
@@ -63,7 +65,9 @@ import { CategoriasComponent } from './components/categorias/categorias.componen
     SalidasDetalleDialogComponent,
     EntradaDetalleDialogComponent,
     IngresosHistorialComponent,
-    CategoriasComponent
+    CategoriasComponent,
+    NuevaCategoriaDialogComponent,
+    EditarCategoriaDialogComponent
 
   ],
   imports: [

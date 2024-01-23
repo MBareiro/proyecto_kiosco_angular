@@ -21,6 +21,10 @@
         <mat-icon class="icon">contacts</mat-icon>        
         <span class="text">Proveedores</span>
       </a>
+      <a mat-list-item routerLink="/navigation/categorias" class="list-item">
+        <mat-icon class="icon">category</mat-icon>        
+        <span class="text">Categorias</span>
+      </a>
       <a mat-list-item routerLink="/navigation/reportes" class="list-item">
         <mat-icon class="icon">description</mat-icon>        
         <span class="text">Reportes</span>
@@ -38,7 +42,7 @@
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
       <span>Zona Centro</span>
-      <button mat-button class="button-right" aria-label="Button on the right">
+      <button mat-button class="button-right" aria-label="Button on the right" (click)="logout()">
         Salir
         <mat-icon>logout</mat-icon> <!-- Icono de logout -->
       </button>

@@ -3,9 +3,9 @@
     <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
       <h2 class="card-title mb-0">Productos Más Vendidos</h2>
       <div>
-        <button mat-mini-fab color="primary" aria-label="" (click)="generarPDF()" matTooltip="Imprimir listado">
+        <!-- <button mat-mini-fab color="primary" aria-label="" (click)="generarPDF()" matTooltip="Imprimir listado">
           <mat-icon>print</mat-icon>
-        </button>
+        </button> -->
       </div>
     </div>    
     <div class="card-body">
@@ -16,7 +16,7 @@
               <span class="mr-3">{{ i + 1 }}.</span>
               <span class="ml-3">{{ producto.producto.nombre }}</span>
             </div>
-            <span>{{ producto.cantidad_vendida }} unidades vendidas</span>
+            <span>{{ producto.cantidad_vendida || 0 }} unidades vendidas</span>
             <!-- Agrega una coronita solo para el primer producto -->
             
           </div>

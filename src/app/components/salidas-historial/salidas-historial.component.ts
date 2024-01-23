@@ -78,22 +78,21 @@ export class SalidasHistorialComponent {
     }
   }  
   
-  verSalida(id: number) {
+  verSalida(id: number, fecha: string) {
     // Llama al servicio para obtener los detalles de la salida por su ID
     this.salidaService.getSalidaDetalle(id).subscribe(
-      (detalles) => {
-        console.log(detalles);
-        
-        // Abre el diálogo y pasa los detalles de la salida como datos
+      (detalles) => {        
+        // Abre el diálogo y pasa los detalles de la salida y la fecha como datos
         const dialogRef = this.dialog.open(SalidasDetalleDialogComponent, {
           width: '260px',
-          data: detalles,  // Pasa los detalles como datos al diálogo
+          data: { detalles: detalles, fecha: fecha },  // Pasa los detalles y la fecha como datos al diálogo
         });
       },
       (error) => {
         console.error('Error al obtener detalles de la salida', error);
       }
     );
-  } 
+  }
+  
   
 }

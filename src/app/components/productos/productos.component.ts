@@ -177,8 +177,10 @@ export class ProductosComponent {
   }
   
   obtenerClaseEstilo(producto: Producto): string {
-    console.log('Cantidad:', producto.cantidad, 'Reserva:', producto.reserva);
-    return producto.cantidad <= producto.reserva ? 'resaltar-rojo' : '';
+    const cantidad = Number(producto.cantidad);
+    const reserva = Number(producto.reserva);
+    return cantidad <= reserva ? 'resaltar-rojo' : '';
   }
+  
   
 }
