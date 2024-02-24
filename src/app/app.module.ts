@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -45,7 +44,11 @@ import { CommonModule } from '@angular/common';
 import { CategoriasComponent } from './components/categorias/categorias.component';
 import { NuevaCategoriaDialogComponent } from './components/nueva-categoria-dialog/nueva-categoria-dialog.component';
 import { EditarCategoriaDialogComponent } from './components/editar-categoria-dialog/editar-categoria-dialog.component';
-
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatTabsModule } from '@angular/material/tabs';
+import { UserCreateComponent } from './components/user/user-create/user-create.component';
+import { UserListComponent } from './components/user/user-list/user-list.component';
+import { FormValidators } from './components/shared/form-validators/form-validators';
 @NgModule({
   declarations: [
     AppComponent,
@@ -67,10 +70,15 @@ import { EditarCategoriaDialogComponent } from './components/editar-categoria-di
     IngresosHistorialComponent,
     CategoriasComponent,
     NuevaCategoriaDialogComponent,
-    EditarCategoriaDialogComponent
-
+    EditarCategoriaDialogComponent,
+    UserCreateComponent,
+    UserListComponent
   ],
   imports: [
+    MatTableModule,
+    MatDialogModule,
+    MatTooltipModule,
+    CommonModule,
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
@@ -84,19 +92,21 @@ import { EditarCategoriaDialogComponent } from './components/editar-categoria-di
     MatFormFieldModule,
     FormsModule,
     MatInputModule,
-    HttpClientModule,
     MatGridListModule,
-    MatMenuModule,
-    MatSnackBarModule,
+    ReactiveFormsModule,
+    MatCardModule,
     MatSelectModule,
-    MatTableModule,
-    MatDialogModule,
-    MatTooltipModule,
+    MatTabsModule,
+    MatExpansionModule,
+    MatMenuModule,
+    HttpClientModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    CommonModule
+    MatSnackBarModule,
+    FormsModule,
   ],
-  providers: [DatePipe, CurrencyPipe],
-  bootstrap: [AppComponent]
+  providers: [DatePipe, CurrencyPipe, FormValidators],
+ 
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

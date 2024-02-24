@@ -5,30 +5,48 @@
               [opened]="(isHandset$ | async) === false">
     <mat-toolbar>Menu</mat-toolbar>
     <mat-nav-list>
-      <a mat-list-item routerLink="/navigation/ingresos" class="list-item">
+      <a mat-list-item routerLink="/navigation/ingresos" class="vertical-align-middle icon-with-margin a">
         <mat-icon class="icon">shopping_cart</mat-icon>
         <span class="text">Ingresos</span>
       </a>
-      <a mat-list-item routerLink="/navigation/salidas" class="list-item">
+      <a mat-list-item routerLink="/navigation/salidas" class="vertical-align-middle icon-with-margin a">
         <mat-icon class="icon">shopping_basket</mat-icon>        
         <span class="text">Salidas</span>
       </a>
-      <a mat-list-item routerLink="/navigation/productos" class="list-item">
+      <a mat-list-item routerLink="/navigation/productos" class="vertical-align-middle icon-with-margin a">
         <mat-icon class="icon">inventory_2</mat-icon>        
         <span class="text">Productos</span>
       </a>
-      <a mat-list-item routerLink="/navigation/proveedores" class="list-item">
+      <a mat-list-item routerLink="/navigation/proveedores" class="vertical-align-middle icon-with-margin a">
         <mat-icon class="icon">contacts</mat-icon>        
         <span class="text">Proveedores</span>
       </a>
-      <a mat-list-item routerLink="/navigation/categorias" class="list-item">
+      <a mat-list-item routerLink="/navigation/categorias" class="vertical-align-middle icon-with-margin a">
         <mat-icon class="icon">category</mat-icon>        
         <span class="text">Categorias</span>
       </a>
-      <a mat-list-item routerLink="/navigation/reportes" class="list-item">
+      <a mat-list-item routerLink="/navigation/reportes" class="vertical-align-middle icon-with-margin a">
         <mat-icon class="icon">description</mat-icon>        
         <span class="text">Reportes</span>
       </a>      
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-icon class="icon">group</mat-icon>
+          <span class="text">Usuarios</span>
+        </mat-expansion-panel-header>
+        <!-- Contenido adicional para el panel desplegable -->
+        <a mat-list-item routerLink="/navigation/user-create" class="vertical-align-middle icon-with-margin a">
+          <mat-icon class="icon">add_circle</mat-icon>        
+          <span class="text">Crear</span>
+        </a>  
+        <a mat-list-item routerLink="/navigation/user-list" class="vertical-align-middle icon-with-margin a">
+          <mat-icon class="icon">list_alt</mat-icon>        
+          <span class="text">Listar</span>
+        </a>  
+        
+        
+        <!-- Agrega más opciones según sea necesario -->
+      </mat-expansion-panel>
       </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>

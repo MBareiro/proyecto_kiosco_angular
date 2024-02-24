@@ -64,3 +64,21 @@
 .text {
   color: white; /* Hereda el color del texto del elemento padre */
 }
+
+/* Estilos personalizados */
+.listar-item {
+  display: flex;
+  align-items: center;
+}
+
+.listar-item .icon {
+  margin-right: 12px; /* Ajusta la separación entre el icono y el texto */
+}
+
+.listar-item .text {
+  margin-top: -2px; /* Ajusta la posición vertical del texto */
+}
+mat-expansion-panel{
+  background-color: black;
+  color: white;
+}

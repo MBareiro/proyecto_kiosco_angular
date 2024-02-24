@@ -11,6 +11,8 @@ import { IngresosHistorialComponent } from './components/ingresos-historial/ingr
 import { SalidasHistorialComponent } from './components/salidas-historial/salidas-historial.component';
 import { ProductosTopComponent } from './components/productos-top/productos-top.component';
 import { CategoriasComponent } from './components/categorias/categorias.component';
+import { UserCreateComponent } from './components/user/user-create/user-create.component';
+import { UserListComponent } from './components/user/user-list/user-list.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' }, // Redirigir a login por defecto
@@ -27,6 +29,9 @@ const routes: Routes = [
       { path: 'salidas_historial', component: SalidasHistorialComponent },
       { path: 'productos_top', component: ProductosTopComponent },
       { path: 'categorias', component: CategoriasComponent },
+      { path: 'categorias', component: CategoriasComponent },
+      { path: 'user-create', component: UserCreateComponent },
+      { path: 'user-list', component: UserListComponent },
     ]
   },
 ];

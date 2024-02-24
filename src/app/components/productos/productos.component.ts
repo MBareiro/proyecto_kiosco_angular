@@ -5,6 +5,7 @@ import { EditarProductoDialogComponent } from '../editar-producto-dialog/editar-
 import { NuevoProductoDialogComponent } from '../nuevo-producto-dialog/nuevo-producto-dialog.component';
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
+import { MatSnackBar } from '@angular/material/snack-bar';
 (pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
 
 export interface Producto {
@@ -41,7 +42,8 @@ export class ProductosComponent {
 
   constructor(
     private productoService: ProductService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private snackBar: MatSnackBar
   ) {}
   ngOnInit(): void {
     // Inicializa la tabla con 10 filas vacías
@@ -140,6 +142,9 @@ export class ProductosComponent {
       },
       (error) => {
         console.error('Error al eliminar el producto', error);
+        this.snackBar.open('Por razones de integridad, no es posible eliminar este producto.', 'Cerrar', {
+          duration: 3000
+        });
       }
     );
   }
