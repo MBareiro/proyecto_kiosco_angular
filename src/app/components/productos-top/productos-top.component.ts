@@ -62,4 +62,9 @@ export class ProductosTopComponent implements OnInit {
     
     pdfMake.createPdf(documentDefinition).open(); 
   }
+  mostrarCantidadVendida(cantidadVendida: string): string {
+    const cantidadNumero = parseFloat(cantidadVendida);
+    return Math.floor(cantidadNumero).toString();
+  }
+  
 }

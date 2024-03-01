@@ -81,7 +81,9 @@ export class SalidasHistorialComponent {
   verSalida(id: number, fecha: string) {
     // Llama al servicio para obtener los detalles de la salida por su ID
     this.salidaService.getSalidaDetalle(id).subscribe(
-      (detalles) => {        
+      (detalles) => {      
+        console.log(detalles);
+          
         // Abre el diálogo y pasa los detalles de la salida y la fecha como datos
         const dialogRef = this.dialog.open(SalidasDetalleDialogComponent, {
           width: '260px',

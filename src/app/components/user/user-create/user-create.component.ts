@@ -4,6 +4,7 @@ import { User } from '../../../models/user.model';
 import { FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';/* 
 import Swal from 'sweetalert2'; */
 import { FormValidators } from '../../shared/form-validators/form-validators';
+import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-user-create',
   templateUrl: './user-create.component.html',
@@ -22,7 +23,7 @@ export class UserCreateComponent {
     role: [null, Validators.required],
   });
 
-  constructor(private userService: UserService, public formValidator: FormValidators) {}
+  constructor(private userService: UserService, public formValidator: FormValidators, private snackBar: MatSnackBar) {}
 
   addUser(): void {
     // Access the form values
@@ -53,6 +54,14 @@ export class UserCreateComponent {
           background: '#191c24',
           timer: 1500,
         }) */
+        
+        this.snackBar.open(
+          'Usuario Creado!',
+          'Cerrar',
+          {
+            duration: 4000,
+          }
+        );
       },
       (error) => {
         console.error('Error adding user:', error);

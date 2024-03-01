@@ -45,7 +45,7 @@ export class LoginComponent {
 
           // Redirigir a la página principal o a la página deseada después del inicio de sesión
           // Puedes personalizar esto según tu aplicación
-          this.router.navigate(['/navigation']);
+          this.router.navigate(['/navigation/salidas']);
         } else {
           // Manejar el caso en el que las credenciales son incorrectas
           console.error('Credenciales incorrectas');

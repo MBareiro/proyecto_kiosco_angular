@@ -14,7 +14,6 @@ export interface PeriodicElement {
   importe: number; // Asegúrate de que importe sea de tipo number
 }
 
-
 const ELEMENT_DATA: PeriodicElement[] = [];
 
 @Component({
@@ -53,8 +52,8 @@ export class SalidasComponent {
     private renderer: Renderer2,
     private snackBar: MatSnackBar,
     private currencyPipe: CurrencyPipe,
-    private datePipe: DatePipe  // Inyecta el servicio DatePipe
-  ) { }
+    private datePipe: DatePipe // Inyecta el servicio DatePipe
+  ) {}
 
   ngOnInit(): void {
     // Inicializa la tabla con 10 filas vacías
@@ -84,7 +83,6 @@ export class SalidasComponent {
       const producto = this.productos.find(
         (producto) => producto.id === selectedProductId
       );
-      console.log(producto);
 
       this.isProductoSeleccionado = true;
       // Remueve la clase is-invalid si está presente
@@ -328,6 +326,7 @@ export class SalidasComponent {
               }
               // Reset the form or perform any other necessary actions after saving
               this.limpiarTabla();
+              this.obtenerProductos();
             },
             (error) => {
               console.error('Error saving Salida Detalle:', error);
@@ -370,7 +369,6 @@ export class SalidasComponent {
       },
     };
 
-
     // Agrega las filas de datos de productos al body de la tabla en documentDefinition
     this.dataSource.forEach((producto) => {
       (
@@ -379,8 +377,8 @@ export class SalidasComponent {
         producto.cod_product.toString(),
         producto.nombre,
         producto.cantidad.toString(),
-        this.formatCurrency(producto.precio_venta), 
-        this.formatCurrency(producto.importe),  // Utiliza la función auxiliar para manejar null
+        this.formatCurrency(producto.precio_venta),
+        this.formatCurrency(producto.importe), // Utiliza la función auxiliar para manejar null
       ]);
     });
 
@@ -402,7 +400,6 @@ export class SalidasComponent {
     // Abre el documento PDF en una nueva ventana
     pdfMake.createPdf(documentDefinition).open();
   }
-
 
   calcularSumaTotal(): number {
     this.sumaTotal = this.dataSource.reduce(
