@@ -13,6 +13,9 @@ import { ProductosTopComponent } from './components/productos-top/productos-top.
 import { CategoriasComponent } from './components/categorias/categorias.component';
 import { UserCreateComponent } from './components/user/user-create/user-create.component';
 import { UserListComponent } from './components/user/user-list/user-list.component';
+import { ForgotPasswordComponent } from './components/account/forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './components/account/reset-password/reset-password.component';
+import { ChangePasswordComponent } from './components/account/change-password/change-password.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' }, // Redirigir a login por defecto
@@ -31,9 +34,12 @@ const routes: Routes = [
       { path: 'categorias', component: CategoriasComponent },
       { path: 'categorias', component: CategoriasComponent },
       { path: 'user-create', component: UserCreateComponent },
-      { path: 'user-list', component: UserListComponent },
-    ]
+      { path: 'user-list', component: UserListComponent },   
+      { path: 'change-password', component: ChangePasswordComponent },   
+    ]    
   },
+  { path: 'forgot-password', component: ForgotPasswordComponent },
+  { path: 'reset-password/:token', component: ResetPasswordComponent },
 ];
 
 @NgModule({

@@ -49,6 +49,9 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { UserCreateComponent } from './components/user/user-create/user-create.component';
 import { UserListComponent } from './components/user/user-list/user-list.component';
 import { FormValidators } from './components/shared/form-validators/form-validators';
+import { ForgotPasswordComponent } from './components/account/forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './components/account/reset-password/reset-password.component';
+import { ChangePasswordComponent } from './components/account/change-password/change-password.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -72,7 +75,10 @@ import { FormValidators } from './components/shared/form-validators/form-validat
     NuevaCategoriaDialogComponent,
     EditarCategoriaDialogComponent,
     UserCreateComponent,
-    UserListComponent
+    UserListComponent,
+    ForgotPasswordComponent,
+    ResetPasswordComponent,
+    ChangePasswordComponent
   ],
   imports: [
     MatTableModule,
