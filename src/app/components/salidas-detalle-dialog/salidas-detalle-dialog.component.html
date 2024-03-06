@@ -6,7 +6,8 @@
   <div *ngFor="let detalle of detalles">
     <div class="detalle-item">
       <p><strong>Producto:</strong> {{ detalle.nombre_producto }}</p>
-      <p><strong>Cantidad:</strong> {{ detalle.cantidad }}</p>
+      <p><strong>Cantidad:</strong> {{ detalle.cantidad | number:'1.0-0' }}</p>
+
       <p><strong>Importe:</strong> {{ detalle.importe | currency:'USD':'symbol':'1.2-2' }}</p>
     </div>
     <hr />

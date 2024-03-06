@@ -49,13 +49,17 @@ export class SalidasHistorialComponent {
       (salidas) => {
         this.salidas = salidas;
         this.salidasOriginal = [...salidas];
-        this.filtrarPorFecha()
+        this.filtrarPorFecha();
+  
+        // Ordena las salidas por fecha y hora de manera ascendente
+        this.salidas.sort((a, b) => new Date(b.fecha).getTime() - new Date(a.fecha).getTime());
       },
       (error) => {
         console.error('Error al obtener la lista de productos', error);
       }
     );
   }
+  
 
   filtrarPorFecha() {
     const startDate = this.campaignTwo.get('start')?.value;

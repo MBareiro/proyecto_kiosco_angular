@@ -50,13 +50,16 @@ export class IngresosHistorialComponent {
         
         this.ingresos = ingresos;
         this.ingresosOriginal = [...ingresos];
-        this.filtrarPorFecha()
+        this.filtrarPorFecha();
+        // Ordena los ingresos por fecha y hora de manera ascendente
+        this.ingresos.sort((a, b) => new Date(b.fecha).getTime() - new Date(a.fecha).getTime());
       },
       (error) => {
         console.error('Error al obtener la lista de productos', error);
       }
     );
   }
+  
 
   filtrarPorFecha() {
     const startDate = this.campaignTwo.get('start')?.value;
