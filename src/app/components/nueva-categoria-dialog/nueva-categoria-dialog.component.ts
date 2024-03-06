@@ -29,4 +29,8 @@ export class NuevaCategoriaDialogComponent {
   cerrarDialog() {
     this.dialogRef.close();
   }
+
+  formularioEsValido(): boolean {
+    return this.categoriaForm.valid;
+  }
 }

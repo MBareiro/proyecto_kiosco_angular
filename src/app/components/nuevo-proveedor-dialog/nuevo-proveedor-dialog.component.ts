@@ -31,4 +31,8 @@ export class NuevoProveedorDialogComponent {
   cerrarDialog() {
     this.dialogRef.close();
   }
+
+  formularioEsValido(): boolean {
+    return this.proveedorForm.valid;
+  }
 }

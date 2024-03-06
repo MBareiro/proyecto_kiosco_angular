@@ -1,13 +1,14 @@
 <!-- nuevo-proveedor-dialog.component.html -->
-<h1 mat-dialog-title>Nuevo Proveedor</h1>
+<h1 mat-dialog-title>Nuevo Categoria</h1>
 <div mat-dialog-content>
   <form [formGroup]="categoriaForm">
     <mat-form-field>
+      <mat-label>Nombre</mat-label>
       <input matInput placeholder="Nombre" formControlName="nombre">
     </mat-form-field>
   </form>
 </div>
 <div mat-dialog-actions>
   <button mat-button (click)="cerrarDialog()">Cancelar</button>
-  <button mat-button color="primary" (click)="guardarNuevoCategoria()">Guardar</button>
+  <button mat-button color="primary" (click)="guardarNuevoCategoria()" [disabled]="!formularioEsValido()">Guardar</button>
 </div>

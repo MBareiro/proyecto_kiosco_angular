@@ -3,17 +3,20 @@
 <div mat-dialog-content>
   <form [formGroup]="proveedorForm">
     <mat-form-field>
+      <mat-label>Nombre</mat-label>
       <input matInput placeholder="Nombre" formControlName="nombre">
     </mat-form-field>
     <mat-form-field>
+      <mat-label>Teléfono</mat-label>
       <input matInput placeholder="Teléfono" formControlName="telefono">
     </mat-form-field>
     <mat-form-field>
+      <mat-label>Dirección</mat-label>
       <input matInput placeholder="Dirección" formControlName="direccion">
     </mat-form-field>
   </form>
 </div>
 <div mat-dialog-actions>
   <button mat-button (click)="cerrarDialog()">Cancelar</button>
-  <button mat-button color="primary" (click)="guardarNuevoProveedor()">Guardar</button>
+  <button mat-button color="primary" (click)="guardarNuevoProveedor()" [disabled]="!formularioEsValido()" >Guardar</button>
 </div>

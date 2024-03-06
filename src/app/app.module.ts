@@ -52,6 +52,7 @@ import { FormValidators } from './components/shared/form-validators/form-validat
 import { ForgotPasswordComponent } from './components/account/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './components/account/reset-password/reset-password.component';
 import { ChangePasswordComponent } from './components/account/change-password/change-password.component';
+import { CrearCategoriaDialogComponent } from './components/crear-categoria-dialog/crear-categoria-dialog.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -78,7 +79,8 @@ import { ChangePasswordComponent } from './components/account/change-password/ch
     UserListComponent,
     ForgotPasswordComponent,
     ResetPasswordComponent,
-    ChangePasswordComponent
+    ChangePasswordComponent,
+    CrearCategoriaDialogComponent
   ],
   imports: [
     MatTableModule,

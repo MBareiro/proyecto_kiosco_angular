@@ -52,13 +52,12 @@ export class SalidasComponent {
     private renderer: Renderer2,
     private snackBar: MatSnackBar,
     private currencyPipe: CurrencyPipe,
-    private datePipe: DatePipe // Inyecta el servicio DatePipe
+    private datePipe: DatePipe 
   ) {}
 
   ngOnInit(): void {
     // Inicializa la tabla con 10 filas vacías
     this.dataSource = [];
-
     this.obtenerProductos();
   }
 
@@ -206,10 +205,9 @@ export class SalidasComponent {
     });
 
     this.actualizarTotal();
+    this.actualizarVuelto();
     this.limpiarCampos();
     this.isProductoSeleccionado = false;
-    // Llama a actualizarVuelto después de actualizar el total
-    this.actualizarVuelto();
   }
 
   limpiarCampos() {
@@ -231,7 +229,7 @@ export class SalidasComponent {
     this.total = this.dataSource.reduce((acc, curr) => acc + curr.importe, 0);
   }
 
-  // Método para actualizar el total
+  // Método para actualizar el vuelto
   actualizarVuelto() {
     // Verifica si el valor de recibidoInput es un número válido
     if (
@@ -264,6 +262,7 @@ export class SalidasComponent {
 
       // Actualiza el total cada vez que se elimina un producto
       this.actualizarTotal();
+      this.actualizarVuelto();
     }
   }
 
@@ -276,6 +275,8 @@ export class SalidasComponent {
     this.limpiarCampos();
     // Actualiza el total después de limpiar la tabla
     this.actualizarTotal();
+    this.actualizarVuelto();
+    this.recibidoInput = null;
   }
 
   guardar() {
@@ -327,6 +328,7 @@ export class SalidasComponent {
               // Reset the form or perform any other necessary actions after saving
               this.limpiarTabla();
               this.obtenerProductos();
+              
             },
             (error) => {
               console.error('Error saving Salida Detalle:', error);

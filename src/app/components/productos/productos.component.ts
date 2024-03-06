@@ -91,7 +91,12 @@ export class ProductosComponent {
     // Carga la lista de productos
     this.productoService.getProductos().subscribe(
       (productos) => {
-        this.productos = productos;
+        // Ordena los productos por la relación reserva/cantidad de forma descendente
+        this.productos = productos.sort((a, b) => {
+          const relacionA = a.reserva / a.cantidad;
+          const relacionB = b.reserva / b.cantidad;
+          return relacionB - relacionA;
+        });
         console.log(this.productos);
       },
       (error) => {
@@ -99,6 +104,7 @@ export class ProductosComponent {
       }
     );
   }
+  
 
   aplicarFiltro() {
     // Filtra los productos por nombre
@@ -113,7 +119,7 @@ export class ProductosComponent {
 
   abrirDialogoNuevoProducto() {
     const dialogRef = this.dialog.open(NuevoProductoDialogComponent, {
-      width: '260px',
+      width: '300px',
     });
 
     dialogRef.afterClosed().subscribe((nuevoProducto) => {
@@ -136,7 +142,9 @@ export class ProductosComponent {
     // Lógica para eliminar un producto
     this.productoService.deleteProducto(idProducto).subscribe(
       () => {
-        console.log('Producto eliminado correctamente.');
+        this.snackBar.open('Producto eliminado correctamente.', 'Cerrar', {
+          duration: 3000
+        });
         // Vuelve a cargar la lista de productoes después de la eliminación
         this.cargarProductos();
       },
@@ -184,8 +192,14 @@ export class ProductosComponent {
   obtenerClaseEstilo(producto: Producto): string {
     const cantidad = Number(producto.cantidad);
     const reserva = Number(producto.reserva);
+    // Verifica si tanto la cantidad como la reserva son 0
+    if (cantidad === 0 && reserva === 0) {
+        return '';
+    }
+    // Si la cantidad es menor o igual a la reserva, resalta en rojo
     return cantidad <= reserva ? 'resaltar-rojo' : '';
-  }
+}
+
   
   
 }

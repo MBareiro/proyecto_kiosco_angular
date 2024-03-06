@@ -15,26 +15,29 @@ export interface Categoria {
 @Component({
   selector: 'app-categorias',
   templateUrl: './categorias.component.html',
-  styleUrls: ['./categorias.component.css']
+  styleUrls: ['./categorias.component.css'],
 })
 export class CategoriasComponent {
   categorias: Categoria[] = [];
   filtroNombre: string = '';
-  categoriaSeleccionado: Categoria = { id: 0, nombre: ''};
+  categoriaSeleccionado: Categoria = { id: 0, nombre: '' };
 
   displayedColumns: string[] = [
     'Cod. Prov.',
     'Nombre',
     'Telefono',
     'Direccion',
-    'Acciones'
+    'Acciones',
   ];
 
-  constructor(private categoriaService: CategoriaService, private dialog: MatDialog,
-    private snackBar: MatSnackBar ) {}
+  constructor(
+    private categoriaService: CategoriaService,
+    private dialog: MatDialog,
+    private snackBar: MatSnackBar
+  ) {}
 
   ngOnInit(): void {
-    this.cargarCategoriaes();
+    this.cargarCategoria();
   }
 
   generarPDF() {
@@ -45,34 +48,29 @@ export class CategoriasComponent {
         {
           table: {
             headerRows: 1,
-            body: [
-              ['Cod. Prov.', 'Nombre', 'Telefono', 'Direccion']
-            ]
-          }
-        }
+            body: [['Cod. Prov.', 'Nombre', 'Telefono', 'Direccion']],
+          },
+        },
       ],
       styles: {
         header: {
           fontSize: 18,
-          bold: true
-        }
-      }
+          bold: true,
+        },
+      },
     };
-  
+
     // Agrega las filas de datos de categorias al body de la tabla en documentDefinition
-    this.categorias.forEach(categoria => {
-      (documentDefinition.content[2] as { table: { body: string[][] } }).table.body.push([
-        categoria.id.toString(),
-        categoria.nombre,
-      ]);
+    this.categorias.forEach((categoria) => {
+      (
+        documentDefinition.content[2] as { table: { body: string[][] } }
+      ).table.body.push([categoria.id.toString(), categoria.nombre]);
     });
-    
-    
-  
+
     pdfMake.createPdf(documentDefinition).open();
   }
 
-  cargarCategoriaes() {
+  cargarCategoria() {
     // Carga la lista de categorias
     this.categoriaService.getCategorias().subscribe(
       (categorias) => {
@@ -84,19 +82,10 @@ export class CategoriasComponent {
         console.error('Error al obtener la lista de categorias', error);
       }
     );
-  }  
-  cargarCategoria(id: string) {
-    this.categoriaService.getCategoriaById(id).subscribe(
-      (categoria) => {
-        this.categoriaSeleccionado = categoria;
-      },
-      (error) => {
-        console.error('Error al obtener el categoria', error);
-      }
-    );
   }
-  
-  eliminarCategoria(idCategoria: number) {// En algún componente o servicio
+ 
+  eliminarCategoria(idCategoria: number) {
+    // En algún componente o servicio
     this.categoriaService.eliminarCategoria(idCategoria).subscribe(
       (respuesta) => {
         console.log('Categoría eliminada correctamente.', respuesta);
@@ -104,13 +93,17 @@ export class CategoriasComponent {
           duration: 3000,
         });
         // Realizar otras acciones necesarias después de eliminar la categoría
-        this.cargarCategoriaes()
+        this.cargarCategoria();
       },
       (error) => {
         console.error('Error al eliminar la categoría', error);
-        this.snackBar.open('No se puede eliminar la categoría. Hay productos asociados.', 'Cerrar', {
-          duration: 3000,
-        });
+        this.snackBar.open(
+          'No se puede eliminar la categoría. Hay productos asociados.',
+          'Cerrar',
+          {
+            duration: 3000,
+          }
+        );
         // Manejar el error según tus necesidades
       }
     );
@@ -120,19 +113,22 @@ export class CategoriasComponent {
     this.categoriaService.getCategoriaById(id).subscribe(
       (categoria) => {
         this.categoriaSeleccionado = categoria;
-  
+
         if (this.categoriaSeleccionado) {
           const dialogRef = this.dialog.open(EditarCategoriaDialogComponent, {
             width: '260px',
             data: { ...this.categoriaSeleccionado },
           });
-  
+
           dialogRef.afterClosed().subscribe((result: Categoria | undefined) => {
             if (result) {
               this.categoriaService.actualizarCategoria(result).subscribe(
                 (resultado) => {
                   console.log('Categoria actualizado correctamente', resultado);
-                  this.cargarCategoriaes();
+                  this.snackBar.open('Categoria actualizada correctamente.', 'Cerrar', {
+                    duration: 4000
+                  });
+                  this.cargarCategoria();
                 },
                 (error) => {
                   console.error('Error al actualizar el categoria', error);
@@ -146,42 +142,34 @@ export class CategoriasComponent {
         console.error('Error al obtener el categoria', error);
       }
     );
-  }  
+  }
   aplicarFiltro() {
     // Filtra los categorias por nombre
-    this.categorias = this.categorias.filter(categoria =>
+    this.categorias = this.categorias.filter((categoria) =>
       categoria.nombre.toLowerCase().includes(this.filtroNombre.toLowerCase())
     );
   }
   limpiarFiltro() {
     this.filtroNombre = '';
-    this.cargarCategoriaes();
-  }
-  guardarCambios() {
-    // Llama a tu servicio para actualizar el categoria en el backend
-    this.categoriaService.actualizarCategoria(this.categoriaSeleccionado).subscribe(
-      (resultado) => {
-        console.log('Categoria actualizado correctamente', resultado);
-        // Puedes recargar la lista de categorias o tomar otras acciones necesarias
-      },
-      (error) => {
-        console.error('Error al actualizar el categoria', error);
-      }
-    );
+    this.cargarCategoria();
   }
   
+
   abrirDialogoNuevoCategoria() {
     const dialogRef = this.dialog.open(NuevaCategoriaDialogComponent, {
       width: '260px',
     });
-  
+
     dialogRef.afterClosed().subscribe((nuevoCategoria) => {
       if (nuevoCategoria) {
         // Lógica para agregar el nuevo categoria
         this.categoriaService.crearCategoria(nuevoCategoria).subscribe(
           (resultado) => {
             console.log('Categoria agregado correctamente', resultado);
-            this.cargarCategoriaes();
+            this.snackBar.open('Categoria agregada correctamente.', 'Cerrar', {
+              duration: 4000
+            });
+            this.cargarCategoria();
           },
           (error) => {
             console.error('Error al agregar el categoria', error);
@@ -189,6 +177,5 @@ export class CategoriasComponent {
         );
       }
     });
-  
   }
 }

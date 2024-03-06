@@ -46,6 +46,8 @@ export class IngresosHistorialComponent {
     // Carga la lista de productos
     this.entradaService.getEntradas().subscribe(
       (ingresos) => {
+        console.log(ingresos);
+        
         this.ingresos = ingresos;
         this.ingresosOriginal = [...ingresos];
         this.filtrarPorFecha()

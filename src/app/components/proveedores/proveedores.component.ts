@@ -5,6 +5,7 @@ import { EditarProveedorDialogComponent } from '../editar-proveedor-dialog/edita
 import { NuevoProveedorDialogComponent } from '../nuevo-proveedor-dialog/nuevo-proveedor-dialog.component';
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
+import { MatSnackBar } from '@angular/material/snack-bar';
 (pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
 
 export interface Proveedor {
@@ -32,7 +33,7 @@ export class ProveedoresComponent {
     'Acciones'
   ];
 
-  constructor(private proveedorService: ProveedorService, private dialog: MatDialog) {}
+  constructor(private proveedorService: ProveedorService, private dialog: MatDialog, private snackBar: MatSnackBar,) {}
 
   ngOnInit(): void {
     this.cargarProveedores();
@@ -69,9 +70,6 @@ export class ProveedoresComponent {
         proveedor.direccion
       ]);
     });
-    
-    
-  
     pdfMake.createPdf(documentDefinition).open();
   }
 
@@ -88,6 +86,7 @@ export class ProveedoresComponent {
       }
     );
   }  
+  
   cargarProveedor(id: string) {
     this.proveedorService.getProveedorById(id).subscribe(
       (proveedor) => {
@@ -104,14 +103,25 @@ export class ProveedoresComponent {
     this.proveedorService.deleteProveedor(idProveedor).subscribe(
       () => {
         console.log('Proveedor eliminado correctamente.');
+        this.snackBar.open('Proveedor eliminado correctamente.', 'Cerrar', {
+          duration: 4000
+        });
         // Vuelve a cargar la lista de proveedores después de la eliminación
         this.cargarProveedores();
       },
       (error) => {
         console.error('Error al eliminar el proveedor', error);
+        this.snackBar.open(
+          'No se puede eliminar proveedor. Hay entradas asociadas.',
+          'Cerrar',
+          {
+            duration: 3000,
+          }
+        );
       }
     );
   }
+
   editarProveedor(id: string) {
     // Mueve la lógica del diálogo dentro de la suscripción
     this.proveedorService.getProveedorById(id).subscribe(
@@ -129,6 +139,9 @@ export class ProveedoresComponent {
               this.proveedorService.actualizarProveedor(result).subscribe(
                 (resultado) => {
                   console.log('Proveedor actualizado correctamente', resultado);
+                  this.snackBar.open('Proveedor actualizado correctamente.', 'Cerrar', {
+                    duration: 4000
+                  });
                   this.cargarProveedores();
                 },
                 (error) => {
@@ -153,19 +166,7 @@ export class ProveedoresComponent {
   limpiarFiltro() {
     this.filtroNombre = '';
     this.cargarProveedores();
-  }
-  guardarCambios() {
-    // Llama a tu servicio para actualizar el proveedor en el backend
-    this.proveedorService.actualizarProveedor(this.proveedorSeleccionado).subscribe(
-      (resultado) => {
-        console.log('Proveedor actualizado correctamente', resultado);
-        // Puedes recargar la lista de proveedores o tomar otras acciones necesarias
-      },
-      (error) => {
-        console.error('Error al actualizar el proveedor', error);
-      }
-    );
-  }
+  }  
   
   abrirDialogoNuevoProveedor() {
     const dialogRef = this.dialog.open(NuevoProveedorDialogComponent, {
@@ -178,6 +179,9 @@ export class ProveedoresComponent {
         this.proveedorService.crearProveedor(nuevoProveedor).subscribe(
           (resultado) => {
             console.log('Proveedor agregado correctamente', resultado);
+            this.snackBar.open('Proveedor agregado correctamente.', 'Cerrar', {
+              duration: 4000
+            });
             this.cargarProveedores();
           },
           (error) => {
@@ -188,4 +192,5 @@ export class ProveedoresComponent {
     });
   
   }
+  
 }

@@ -89,12 +89,24 @@ export class IngresosComponent {
       this.isProductoSeleccionado = true;
       // Remueve la clase is-invalid si está presente
       this.renderer.removeClass(document.getElementById('productos'), 'is-invalid');
+  
+      // Encuentra el producto seleccionado en la lista de productos
+      const selectedProduct = this.productos.find(producto => producto.id === parseInt(this.selectedProduct, 10));
+  
+      // Establece el valor de reserva del producto seleccionado en el input de reserva
+      if (selectedProduct) {
+        this.reservaInput = selectedProduct.reserva;
+      } else {
+        // En caso de que no se encuentre el producto seleccionado, establece el input de reserva en null
+        this.reservaInput = null;
+      }
     } else {
       this.isProductoSeleccionado = false;
       // Agrega la clase is-invalid si la opción no es válida
       this.renderer.addClass(document.getElementById('productos'), 'is-invalid');
     }
   }
+  
 
   Proveedor() {
     this.isProveedorSeleccionado = true;
@@ -157,22 +169,26 @@ export class IngresosComponent {
   }
   
   ReservaValidacion() {
+    console.log(this.reservaInput);
+  
     // Verifica si el valor de reserva es un número válido y mayor o igual a 0
-    if (this.reservaInput !== null && typeof this.reservaInput === 'number' && isFinite(this.reservaInput) && this.reservaInput > 0) {
+    if (this.reservaInput !== null && !isNaN(this.reservaInput) && this.reservaInput >= 0) {
       // Valor válido, remueve la clase is-invalid
       this.renderer.removeClass(document.getElementById('reserva'), 'is-invalid');
     } else {
+      console.log(this.reservaInput);
       // Valor no válido, agrega la clase is-invalid
       this.renderer.addClass(document.getElementById('reserva'), 'is-invalid');
       if (this.reservaInput === null) {
         this.mostrarSnackbar('Debe completar el campo Reserva', ['error-snackbar']);
-      } else if (this.reservaInput <= 0) {
-        this.mostrarSnackbar('El valor en el campo Reserva debe ser mayor a 0', ['error-snackbar']);
+      } else if (this.reservaInput < 0) {
+        this.mostrarSnackbar('El valor en el campo Reserva debe ser mayor o igual a 0', ['error-snackbar']);
       } else {
-        this.mostrarSnackbar('No se pueden ingresar valores negativos en el campo Reserva', ['error-snackbar']);
+        this.mostrarSnackbar('Por favor, ingrese un valor numérico válido en el campo Reserva', ['error-snackbar']);
       }
     }
   }
+  
 
   registrarProducto() {
     this.PrecioCompraValidacion();
@@ -206,9 +222,6 @@ export class IngresosComponent {
       // El producto no fue encontrado
       console.log('Producto no encontrado');
     }
-
-
-
     const productoExistente = this.dataSource.find(item => item.cod_product === producto.id);
 
     if (productoExistente) {
