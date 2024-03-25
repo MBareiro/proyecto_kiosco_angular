@@ -12,12 +12,11 @@ import { Router } from '@angular/router';
 })
 export class NavigationComponent {
   private breakpointObserver = inject(BreakpointObserver);
-  userName: string | null;
+  /* userName: string | null; */
 
   constructor(private authService: AuthService, private router: Router){
-    this.userName = localStorage.getItem('userName');
-    authService.authorized();
-    console.log(this.userName);
+    /* this.userName = localStorage.getItem('userName');
+    authService.authorized(); */
   }
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(

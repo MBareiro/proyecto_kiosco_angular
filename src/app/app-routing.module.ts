@@ -18,7 +18,8 @@ import { ResetPasswordComponent } from './components/account/reset-password/rese
 import { ChangePasswordComponent } from './components/account/change-password/change-password.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/login', pathMatch: 'full' }, // Redirigir a login por defecto
+  
+  { path: '', redirectTo: '/navigation/ingresos', pathMatch: 'full' }, // Redirigir a ingresos por defecto
   { path: 'login', component: LoginComponent },
   {
     path: 'navigation', component: NavigationComponent,
