@@ -173,6 +173,9 @@ export class ProductosComponent {
               this.productoService.actualizarProducto(result).subscribe(
                 (resultado) => {
                   console.log('Producto actualizado correctamente', resultado);
+                  this.snackBar.open('Producto actualizado correctamente', 'Cerrar', {
+                    duration: 3000
+                  });
                   this.cargarProductos();
                 },
                 (error) => {
